@@ -11,16 +11,23 @@ export class MealService {
 
   constructor(private http: HttpClient) {}
 
-  getMeals() {
-    return this.http.get(`${this.API_URL}?number=20&addRecipeInformation=true&apiKey=${this.API_KEY}`);
-  }
+  getMeals(offset: number = 0, filters: any = {}) {
 
-  searchMeals(query: string) {
-    return this.http.get(`${this.API_URL}?query=${query}&number=20&apiKey=${this.API_KEY}`);
-  }
+    let url = `${this.API_URL}?number=20&offset=${offset}&addRecipeInformation=true&sort=popularity&apiKey=${this.API_KEY}`;
 
-  getAllMeals() {
-    return this.http.get(`${this.API_URL}?number=20&apiKey=${this.API_KEY}`);
+    if(filters.type){
+      url += `&type=${filters.type}`;
+    }
+
+    if(filters.cuisine){
+      url += `&cuisine=${filters.cuisine}`;
+    }
+
+    if(filters.diet){
+      url += `&diet=${filters.diet}`;
+    }
+
+    return this.http.get(url);
   }
 
 }
