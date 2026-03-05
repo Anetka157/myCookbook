@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MealService } from 'src/app/core/services/meal.service';
-import { Meal } from 'src/app/models/meal.model';
 
 @Component({
   selector: 'app-tab1',
@@ -16,8 +15,8 @@ export class Tab1Page implements OnInit {
 
   private mealService = inject(MealService);
 
-  recipes: Meal[] = [];
-  filteredRecipes: Meal[] = [];
+  recipes: any[] = [];
+  filteredRecipes: any[] = [];
   searchTerm: string = '';
 
   ngOnInit() {
@@ -25,15 +24,15 @@ export class Tab1Page implements OnInit {
   }
 
   loadMeals() {
-    this.mealService.getAllMeals().subscribe(res => {
-      this.recipes = res.meals;
-      this.filteredRecipes = res.meals;
+    this.mealService.getAllMeals().subscribe((res: any) => {
+      this.recipes = res.results;
+      this.filteredRecipes = res.results;
     });
   }
 
   filterRecipes() {
-    this.filteredRecipes = this.recipes.filter(r =>
-      r.strMeal.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredRecipes = this.recipes.filter((r: any) =>
+      r.title.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 }

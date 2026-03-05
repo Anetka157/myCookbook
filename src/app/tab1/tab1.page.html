@@ -3,26 +3,32 @@
     <ion-title>Recepty</ion-title>
   </ion-toolbar>
 
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    (ionInput)="filterRecipes()"
-    placeholder="Hledat recept">
-  </ion-searchbar>
+  <!-- vyhledávání -->
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterRecipes()"
+      placeholder="Hledat recept...">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-list>
-    <ion-item *ngFor="let meal of filteredRecipes">
-      <ion-thumbnail slot="start">
-        <img [src]="meal.strMealThumb">
-      </ion-thumbnail>
 
-      <ion-label>
-        <h2>{{ meal.strMeal }}</h2>
-        <p>{{ meal.strCategory }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-card *ngFor="let recipe of filteredRecipes">
+
+      <img [src]="recipe.image" />
+
+      <ion-card-header>
+        <ion-card-title>
+          {{recipe.title}}
+        </ion-card-title>
+      </ion-card-header>
+
+    </ion-card>
+
   </ion-list>
 
 </ion-content>
