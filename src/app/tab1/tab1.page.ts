@@ -28,13 +28,12 @@ export class Tab1Page implements OnInit {
   }
 
   loadMeals() {
+    // Tady přidáme 'query: this.searchTerm', aby servis věděl, co hledáš
+    const activeFilters = { ...this.filters, query: this.searchTerm };
 
-    this.mealService.getMeals(this.offset, this.filters).subscribe((res: any) => {
-
+    this.mealService.getMeals(this.offset, activeFilters).subscribe((res: any) => {
       this.recipes = [...this.recipes, ...res.results];
-
     });
-
   }
 
   loadMore(event: any) {
@@ -74,4 +73,9 @@ export class Tab1Page implements OnInit {
 
   }
 
+  handleSearch() {
+    this.offset = 0;
+    this.recipes = [];
+    this.loadMeals();
+  }
 }

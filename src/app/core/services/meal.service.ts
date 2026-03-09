@@ -1,33 +1,63 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MealService {
+  private http = inject(HttpClient);
 
-  private API_URL = 'https://api.spoonacular.com/recipes/complexSearch';
-  private API_KEY = '1091013dc3d3484686c6c9fd746b940a';
-
-  constructor(private http: HttpClient) {}
+  // Tvůj fungující odkaz
+  private apiUrl = 'https://corsproxy.io/?https://gist.githubusercontent.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/c7a48ccd31cad6d7bc5958175ade8a38c44533cf/recipes.json';
 
   getMeals(offset: number = 0, filters: any = {}) {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(allData => {
+        // ONLINE: Data přišla v pořádku, uložíme je do LocalStorage pro příště
+        localStorage.setItem('my_recipes_cache', JSON.stringify(allData));
+        console.log('Data stažena z API a uložena do LocalStorage');
+        return this.processData(allData, offset, filters);
+      }),
+      catchError(err => {
+        // OFFLINE: Internet nejde, zkusíme najít data v LocalStorage
+        console.warn('API nedostupné, zkouším LocalStorage...');
+        const cachedData = localStorage.getItem('my_recipes_cache');
 
-    let url = `${this.API_URL}?number=20&offset=${offset}&addRecipeInformation=true&sort=popularity&apiKey=${this.API_KEY}`;
-
-    if(filters.type){
-      url += `&type=${filters.type}`;
-    }
-
-    if(filters.cuisine){
-      url += `&cuisine=${filters.cuisine}`;
-    }
-
-    if(filters.diet){
-      url += `&diet=${filters.diet}`;
-    }
-
-    return this.http.get(url);
+        if (cachedData) {
+          const allData = JSON.parse(cachedData);
+          console.log('Zobrazuji data z LocalStorage (Offline režim)');
+          return of(this.processData(allData, offset, filters));
+        } else {
+          // Pokud nemáme internet ani uložená data, vrátíme prázdný výsledek
+          console.error('Žádná data nejsou k dispozici (offline a bez cache)');
+          return of({ results: [], total: 0 });
+        }
+      })
+    );
   }
 
+  // Tahle pomocná funkce dělá filtrování, aby se kód neopakoval
+  private processData(data: any[], offset: number, filters: any) {
+    let filtered = [...data];
+
+    // Vyhledávání
+    if (filters.query) {
+      const q = filters.query.toLowerCase();
+      filtered = filtered.filter(m => m.title.toLowerCase().includes(q));
+    }
+
+    // Tady můžeš přidat další filtry z tvého FilterComponent
+    if (filters.cuisine) {
+      filtered = filtered.filter(m => m.cuisine === filters.cuisine);
+    }
+
+    const results = filtered.slice(offset, offset + 20);
+
+    return {
+      results: results,
+      total: filtered.length
+    };
+  }
 }

@@ -8,7 +8,8 @@
 
     <ion-searchbar
       [(ngModel)]="searchTerm"
-      placeholder="Search for recipe...">
+      (ionInput)="handleSearch()"
+      placeholder="Hledat recept...">
     </ion-searchbar>
 
     <ion-buttons slot="end">
@@ -25,7 +26,7 @@
 
   <div class="recipes-grid">
 
-  <ion-card *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.id]" class="recipe-card">
+  <ion-card tappable *ngFor="let recipe of recipes" [routerLink]="['/recipe-detail', recipe.id]" class="recipe-card">
 
     <img [src]="recipe.image" />
 
