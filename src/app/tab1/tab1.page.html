@@ -8,7 +8,7 @@
 
     <ion-searchbar
       [(ngModel)]="searchTerm"
-      placeholder="Hledat recept...">
+      placeholder="Search for recipe...">
     </ion-searchbar>
 
     <ion-buttons slot="end">
@@ -21,9 +21,11 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
-  <ion-card *ngFor="let recipe of recipes">
+  <div class="recipes-grid">
+
+  <ion-card *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.id]" class="recipe-card">
 
     <img [src]="recipe.image" />
 
@@ -34,6 +36,7 @@
     </ion-card-header>
 
   </ion-card>
+  </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
 

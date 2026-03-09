@@ -1,14 +1,29 @@
-ion-card img {
+.recipes-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.recipe-card{
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1e1e1e;
+  color: white;
+}
+
+.recipe-card img{
   width: 100%;
-  height: 160px;
+  height: 140px;
   object-fit: cover;
 }
-ion-card {
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 16px;
-}
-ion-card-title {
-  font-size: 20px;
+
+ion-card-title{
+  font-size: 16px;
   font-weight: 600;
+  line-height: 1.3;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* max 2 řádky */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
