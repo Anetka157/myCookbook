@@ -10,7 +10,7 @@ export class MealService {
   private http = inject(HttpClient);
 
   // Tvůj fungující odkaz
-  private apiUrl = 'https://corsproxy.io/?https://gist.githubusercontent.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/c7a48ccd31cad6d7bc5958175ade8a38c44533cf/recipes.json';
+  private apiUrl = 'https://corsproxy.io/?https://gist.github.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/763fc3b3ce51393919a7bdf56d03cbfeb5363fad/recipes.json';
 
   getMeals(offset: number = 0, filters: any = {}) {
     return this.http.get<any[]>(this.apiUrl).pipe(

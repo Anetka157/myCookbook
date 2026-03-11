@@ -1,11 +1,9 @@
 <ion-header>
-
   <ion-toolbar>
     <ion-title>Recepty</ion-title>
   </ion-toolbar>
 
   <ion-toolbar>
-
     <ion-searchbar
       [(ngModel)]="searchTerm"
       (ionInput)="handleSearch()"
@@ -17,29 +15,26 @@
         <ion-icon name="options-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content class="ion-padding">
 
   <div class="recipes-grid">
-
-  <ion-card tappable *ngFor="let recipe of recipes" [routerLink]="['/recipe-detail', recipe.id]" class="recipe-card">
-
-    <img [src]="recipe.image" />
-
-    <ion-card-header>
-      <ion-card-title>
-        {{recipe.title}}
-      </ion-card-title>
-    </ion-card-header>
-
-  </ion-card>
+    <ion-card tappable *ngFor="let recipe of recipes" [routerLink]="['/recipe-detail', recipe.id]" class="recipe-card">
+      <img [src]="recipe.image" alt="{{ recipe.title }}" />
+      <ion-card-header>
+        <ion-card-title>
+          {{recipe.title}}
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadMore($event)"
+    [disabled]="recipes.length >= totalRecipes">
 
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
@@ -47,5 +42,9 @@
     </ion-infinite-scroll-content>
 
   </ion-infinite-scroll>
+
+  <div *ngIf="recipes.length >= totalRecipes && totalRecipes > 0" class="ion-text-center ion-padding">
+    <ion-note>To je vše, dobrou chuť!</ion-note>
+  </div>
 
 </ion-content>
