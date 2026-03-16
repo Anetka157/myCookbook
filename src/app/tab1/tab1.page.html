@@ -1,50 +1,67 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Recepty</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <div class="header-content">
+      <h1 class="welcome-text">Ahoj, {{ userName }}</h1>
+      <p class="sub-text">Co si dnes uvaříme?</p>
+    </div>
+    <ion-buttons slot="end">
+      <div class="avatar-circle">
+        <ion-icon name="restaurant-outline" style="font-size: 24px; color: #ffc107;"></ion-icon>
+      </div> </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-searchbar
       [(ngModel)]="searchTerm"
       (ionInput)="handleSearch()"
-      placeholder="Hledat recept...">
+      placeholder="Hledat recept..."
+      class="custom-searchbar">
     </ion-searchbar>
-
     <ion-buttons slot="end">
-      <ion-button (click)="openFilter()">
+      <ion-button (click)="openFilter()" class="filter-btn">
         <ion-icon name="options-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true" color="dark">
 
   <div class="recipes-grid">
-    <ion-card tappable *ngFor="let recipe of recipes" [routerLink]="['/recipe-detail', recipe.id]" class="recipe-card">
-      <img [src]="recipe.image" alt="{{ recipe.title }}" />
-      <ion-card-header>
-        <ion-card-title>
-          {{recipe.title}}
-        </ion-card-title>
-      </ion-card-header>
-    </ion-card>
+    <div class="recipe-item" *ngFor="let recipe of recipes">
+
+      <div class="image-container">
+        <img [src]="recipe.image" alt="{{ recipe.title }}" [routerLink]="['/recipe-detail', recipe.id]" />
+        <div class="heart-badge">
+          <ion-button fill="clear" (click)="addToFavorites(recipe); $event.stopPropagation()">
+            <ion-icon slot="icon-only" name="heart-outline" color="danger"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <div class="recipe-details" [routerLink]="['/recipe-detail', recipe.id]">
+        <h3>{{ recipe.title }}</h3>
+
+        <div class="meta-row">
+          <div class="time-info">
+            <ion-icon name="time-outline"></ion-icon>
+            <span>{{ recipe.readyInMinutes || '30' }} min</span>
+          </div>
+          <div class="level-info">
+            <span>Easy lvl</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <ion-infinite-scroll
     threshold="100px"
     (ionInfinite)="loadMore($event)"
     [disabled]="recipes.length >= totalRecipes">
-
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Načítám další recepty...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
     </ion-infinite-scroll-content>
-
   </ion-infinite-scroll>
-
-  <div *ngIf="recipes.length >= totalRecipes && totalRecipes > 0" class="ion-text-center ion-padding">
-    <ion-note>To je vše, dobrou chuť!</ion-note>
-  </div>
 
 </ion-content>

@@ -9,50 +9,66 @@ import { of } from 'rxjs';
 export class MealService {
   private http = inject(HttpClient);
 
-  // Tvůj fungující odkaz
+  // Odkaz na tvůj JSON na Gistu
   private apiUrl = 'https://corsproxy.io/?https://gist.github.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/763fc3b3ce51393919a7bdf56d03cbfeb5363fad/recipes.json';
 
   getMeals(offset: number = 0, filters: any = {}) {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(allData => {
-        // ONLINE: Data přišla v pořádku, uložíme je do LocalStorage pro příště
+        // Uložení do cache pro offline režim
         localStorage.setItem('my_recipes_cache', JSON.stringify(allData));
-        console.log('Data stažena z API a uložena do LocalStorage');
         return this.processData(allData, offset, filters);
       }),
       catchError(err => {
-        // OFFLINE: Internet nejde, zkusíme najít data v LocalStorage
-        console.warn('API nedostupné, zkouším LocalStorage...');
         const cachedData = localStorage.getItem('my_recipes_cache');
-
         if (cachedData) {
           const allData = JSON.parse(cachedData);
-          console.log('Zobrazuji data z LocalStorage (Offline režim)');
           return of(this.processData(allData, offset, filters));
         } else {
-          // Pokud nemáme internet ani uložená data, vrátíme prázdný výsledek
-          console.error('Žádná data nejsou k dispozici (offline a bez cache)');
           return of({ results: [], total: 0 });
         }
       })
     );
   }
 
-  // Tahle pomocná funkce dělá filtrování, aby se kód neopakoval
   private processData(data: any[], offset: number, filters: any) {
     let filtered = [...data];
 
-    // Vyhledávání
+    // 1. FILTR: Vyhledávání (Text v searchbaru)
     if (filters.query) {
       const q = filters.query.toLowerCase();
       filtered = filtered.filter(m => m.title.toLowerCase().includes(q));
     }
 
-    // Tady můžeš přidat další filtry z tvého FilterComponent
-    if (filters.cuisine) {
-      filtered = filtered.filter(m => m.cuisine === filters.cuisine);
+    // 2. FILTR: Typ jídla (Snídaně, Oběd, Dezert...)
+    if (filters.type && filters.type !== '') {
+      const t = filters.type.toLowerCase();
+      filtered = filtered.filter(m =>
+        // Hledáme v poli dishTypes (standard Spoonacular) nebo v přímé vlastnosti type
+        (m.dishTypes && m.dishTypes.some((dt: string) => dt.toLowerCase().includes(t))) ||
+        (m.type && m.type.toLowerCase() === t)
+      );
     }
 
+    // 3. FILTR: Kuchyně (Italská, Americká...)
+    if (filters.cuisine && filters.cuisine !== '') {
+      const c = filters.cuisine.toLowerCase();
+      filtered = filtered.filter(m =>
+        (m.cuisines && m.cuisines.some((cs: string) => cs.toLowerCase() === c)) ||
+        (m.cuisine && m.cuisine.toLowerCase() === c)
+      );
+    }
+
+    // 4. FILTR: Dieta (Vegetariánská, Bezlepková...)
+    if (filters.diet && filters.diet !== '') {
+      const d = filters.diet.toLowerCase();
+      filtered = filtered.filter(m =>
+        (m.diets && m.diets.some((di: string) => di.toLowerCase() === d)) ||
+        (m.diet && m.diet.toLowerCase() === d)
+      );
+    }
+
+    // Stránkování (Pagination)
     const results = filtered.slice(offset, offset + 20);
 
     return {

@@ -13,13 +13,24 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from './environments/environment';
 
+// NOVÉ IMPORTY PRO MODERNÍ FIRESTORE
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth'; // <--- Tohle musíš naimportovat
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
-    // Propojení s Firebase
+
+    // Moderní inicializace (řeší chybu NG0203)
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()), // <--- TENTO ŘÁDEK CHYBÍ A OPRAVÍ TO
+
+    // Ponechání kompatibility pro zbytek appky
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireAuthModule,

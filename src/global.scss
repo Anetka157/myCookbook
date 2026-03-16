@@ -35,3 +35,60 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* TOTÁLNÍ ZÁKAZ BÍLÉ BARVY V CELÉ APPCE */
+:root {
+  --ion-background-color: #121212 !important;
+  --ion-background-color-rgb: 18,18,18 !important;
+  background-color: #121212 !important;
+}
+
+html, body, ion-app, ion-content, ion-router-outlet, .ion-page {
+  --background: #121212 !important;
+  background: #121212 !important;
+  background-color: #121212 !important;
+}
+
+ion-content::part(background) {
+  background: #121212 !important;
+}
+
+/* Oprava pro iOS a Android specifické kontejnery */
+.ion-page-main {
+  background-color: #121212 !important;
+}
+
+/* Zajištění, aby i prázdný prostor pod seznamem byl černý */
+.main-content {
+  background-color: #121212 !important;
+  min-height: 100vh;
+}
+
+ion-modal {
+  --background: #121212 !important;
+
+  &::part(content) {
+    background: #121212 !important;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+/* Totální vymazání bílé z modalů */
+ion-modal {
+  --background: #121212 !important;
+
+  &::part(content) {
+    background: #121212 !important;
+    /* Odstraní bílý stín/okraj kolem vnitřku */
+    box-shadow: none !important;
+  }
+}
+
+/* Odstranění systémových čar v hlavičkách a patičkách */
+.header-md::after,
+.footer-md::before,
+.header-ios::after,
+.footer-ios::before {
+  display: none !important;
+  content: none !important;
+}

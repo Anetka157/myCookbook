@@ -1,29 +1,166 @@
-.recipes-grid{
+// HLAVNÍ KONTEJNER
+ion-content {
+  --background: #121212 !important;
+}
+
+// HLAVIČKA
+ion-header {
+  background-color: #121212;
+  --background: #121212 !important;
+
+  ion-toolbar {
+    --background: #121212 !important;
+    --ion-color-base: #121212 !important;
+    --border-style: none !important;
+    background: #121212 !important;
+    color: white;
+    padding: 10px 5px 0 5px;
+
+    &::part(background) {
+      background: #121212 !important;
+    }
+
+    &::part(container) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+// OPRAVA PRO DRUHÝ TOOLBAR (Vyhledávání + Filtr)
+ion-toolbar:last-of-type {
+  --background: #121212 !important;
+  padding: 0 10px 10px 10px; // Sjednocený padding pro celý řádek
+
+  &::part(container) {
+    display: flex;
+    align-items: center; // Toto srovná středové osy
+    justify-content: space-between;
+    min-height: 56px;
+  }
+}
+
+.custom-searchbar {
+  --background: #1e1e1e !important;
+  --color: white !important;
+  --placeholder-color: #666;
+  --icon-color: #ffc107;
+  --border-radius: 16px;
+
+  flex: 1;
+  margin: 0 !important;
+  height: 48px; // Fixní výška searchbaru
+
+  // Odstranění vnitřních paddingů, které searchbar posouvají
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.filter-btn {
+  --color: #ffffff;
+  margin: 0 0 0 8px !important; // Mezera mezi searchbarem a ikonou
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px; // Stejná výška jako searchbar zajistí střed
+  min-width: 48px;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  /* Pokud ikona stále vypadá o pixel výš, pohneme jen vnitřkem */
+  ion-icon {
+    font-size: 1.6rem;
+    margin-top: 2px; // Jemné doladění na optický střed
+  }
+}
+
+// ZBYTEK STYLŮ (Welcome text, Grid, atd.)
+.header-content {
+  padding-left: 10px;
+
+  .welcome-text {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+
+  .sub-text {
+    font-size: 0.9rem;
+    color: #a0a0a0 !important;
+    margin: 4px 0 0 0;
+  }
+}
+
+.avatar-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #1e1e1e;
+  border: 1.5px solid #ffc107;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.category-scroll {
+  display: flex;
+  gap: 12px;
+  padding: 20px 16px;
+  overflow-x: auto;
+  background: #121212;
+
+  &::-webkit-scrollbar { display: none; }
+
+  ion-badge {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+}
+
+.recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+  padding: 0 16px 20px 16px;
+  background: #121212;
+  min-height: 100vh;
 }
 
-.recipe-card{
-  border-radius: 20px;
-  overflow: hidden;
+.recipe-item {
   background: #1e1e1e;
-  color: white;
-}
-
-.recipe-card img{
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-ion-card-title{
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  border-radius: 28px;
   overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+  .image-container {
+    position: relative;
+    height: 160px;
+    img { width: 100%; height: 100%; object-fit: cover; }
+    .heart-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(8px);
+      border-radius: 50%; width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+  }
+
+  .recipe-details {
+    padding: 14px;
+    h3 { color: #ffffff; font-size: 0.9rem; font-weight: 600; line-height: 1.2; height: 2.4rem; overflow: hidden; }
+    .meta-row {
+      display: flex; justify-content: space-between; margin-top: 12px;
+      .time-info, .level-info {
+        display: flex; align-items: center; color: #9e9e9e; font-size: 0.7rem;
+        ion-icon { color: #ffc107; margin-right: 4px; }
+      }
+    }
+  }
 }
