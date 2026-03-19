@@ -1,0 +1,43 @@
+<ion-content>
+  <div class="recipe-header">
+    <img [src]="recipe?.image" />
+    <div class="gradient-overlay"></div>
+    <ion-back-button defaultHref="/tabs/tab1" text="" color="light" class="back-btn"></ion-back-button>
+  </div>
+
+  <div class="recipe-body" *ngIf="recipe">
+    <div class="header-section">
+      <ion-badge color="warning">{{ recipe.category || 'Recept' }}</ion-badge>
+      <h1>{{ recipe.name || recipe.title }}</h1>
+
+      <div class="meta-info">
+        <div class="info-item">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>{{ recipe.time || '30' }} min</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="flame-outline"></ion-icon>
+          <span>{{ recipe.difficulty || 'Easy' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>Ingredience</h2>
+      <ion-list lines="none" class="ingredients-list">
+        <ion-item *ngFor="let ing of recipe.ingredients">
+          <ion-checkbox slot="start" color="warning"></ion-checkbox>
+          <ion-label>{{ ing }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div class="content-card">
+      <h2>Postup přípravy</h2>
+      <div class="step-item" *ngFor="let step of instructionsArray; let i = index">
+        <div class="step-number">{{ i + 1 }}</div>
+        <div class="step-text">{{ step }}</div>
+      </div>
+    </div>
+  </div>
+</ion-content>

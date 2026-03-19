@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-title>Filtry</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()" color="light">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <div class="filter-wrapper">
+    <div class="filter-group">
+      <label class="group-label">
+        <ion-icon name="restaurant-outline"></ion-icon> Typ jídla
+      </label>
+      <ion-item lines="none" class="custom-select-item">
+        <ion-select [(ngModel)]="type" placeholder="Vyberte typ" interface="action-sheet">
+          <ion-select-option value="breakfast">Snídaně</ion-select-option>
+          <ion-select-option value="lunch">Oběd</ion-select-option>
+          <ion-select-option value="dinner">Večeře</ion-select-option>
+          <ion-select-option value="dessert">Dezert</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="filter-group">
+      <label class="group-label">
+        <ion-icon name="earth-outline"></ion-icon> Kuchyně
+      </label>
+      <ion-item lines="none" class="custom-select-item">
+        <ion-select [(ngModel)]="cuisine" placeholder="Vyberte kuchyni" interface="action-sheet">
+          <ion-select-option value="italian">Italská</ion-select-option>
+          <ion-select-option value="mexican">Mexická</ion-select-option>
+          <ion-select-option value="chinese">Čínská</ion-select-option>
+          <ion-select-option value="indian">Indická</ion-select-option>
+          <ion-select-option value="french">Francouzská</ion-select-option>
+          <ion-select-option value="czech">Česká</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="filter-group">
+      <label class="group-label">
+        <ion-icon name="leaf-outline"></ion-icon> Dieta
+      </label>
+      <ion-item lines="none" class="custom-select-item">
+        <ion-select [(ngModel)]="diet" placeholder="Dietní omezení" interface="action-sheet">
+          <ion-select-option value="vegetarian">Vegetariánská</ion-select-option>
+          <ion-select-option value="vegan">Veganská</ion-select-option>
+          <ion-select-option value="gluten free">Bezlepková</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div> </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="dark">
+    <div class="button-group">
+      <ion-button expand="block" fill="outline" color="medium" class="reset-btn" (click)="resetFilters()">
+        Zrušit
+      </ion-button>
+
+      <ion-button expand="block" class="apply-btn" (click)="applyFilters()">
+        Použít
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

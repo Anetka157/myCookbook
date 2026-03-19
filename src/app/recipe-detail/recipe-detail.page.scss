@@ -1,0 +1,109 @@
+ion-content {
+  --background: #121212 !important;
+}
+
+.recipe-header {
+  position: relative;
+  width: 100%;
+  height: 35vh; // Fotka přes třetinu displeje
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 40%, #121212 100%);
+  }
+
+  .back-btn {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    --color: white;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.recipe-body {
+  padding: 0 20px 40px 20px;
+  margin-top: -30px; // Překrytí gradientu textem
+
+  .header-section {
+    margin-bottom: 30px;
+    h1 {
+      color: white;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+    .meta-info {
+      display: flex;
+      gap: 20px;
+      .info-item {
+        display: flex;
+        align-items: center;
+        color: #999;
+        ion-icon { color: #ffc107; margin-right: 5px; }
+      }
+    }
+  }
+
+  .content-card {
+    background: #1e1e1e;
+    border-radius: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    h2 {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+  }
+
+  .ingredients-list {
+    background: transparent;
+    ion-item {
+      --background: transparent;
+      --color: #ccc;
+      --padding-start: 0;
+      font-size: 0.95rem;
+      ion-checkbox { margin-right: 15px; }
+    }
+  }
+
+  .step-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .step-number {
+      min-width: 30px;
+      height: 30px;
+      background: #ffc107;
+      color: black;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .step-text {
+      color: #bbb;
+      line-height: 1.5;
+    }
+  }
+}

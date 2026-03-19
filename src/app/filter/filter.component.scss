@@ -1,0 +1,108 @@
+// Zacílíme přímo na vnitřek Ionic komponenty
+ion-content {
+  --background: #121212 !important; // Temně černá
+
+  &::part(background) {
+    background: #121212 !important;
+  }
+}
+
+// Obal pro filtry
+.filter-wrapper {
+  background-color: #121212;
+  padding: 16px;
+  min-height: 100%;
+}
+
+// Oprava bílých pruhů u ion-item
+ion-item {
+  --background: transparent !important;
+  --ion-item-background: transparent !important;
+  background: transparent !important;
+  color: white !important;
+  margin-bottom: 10px;
+}
+
+// Styl pro popisky (Typ jídla atd.)
+.group-label {
+  color: #ffc107 !important; // Tvoje žlutá
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Ty černé bubliny (selecty)
+.custom-select-item {
+  --background: #1e1e1e !important;
+  --ion-item-background: #1e1e1e !important;
+  --border-radius: 12px;
+  border: 1px solid #333;
+}
+
+// Hlavička a patička
+ion-toolbar {
+  --background: #121212 !important;
+  --color: white !important;
+  --border-style: none !important;
+}
+
+/* Vynucení černé pro hlavičku a patičku přímo v komponentě */
+ion-header, ion-footer {
+  background-color: #121212 !important;
+
+  ion-toolbar {
+    --background: #121212 !important;
+    --ion-color-base: #121212 !important;
+    --border-style: none !important;
+    border: none !important;
+    /* Odstraní vnitřní stíny toolbarů */
+    --box-shadow: none !important;
+  }
+}
+
+/* Oprava titulku "Filtry", aby na černém nezmizel */
+ion-title {
+  color: #ffffff !important;
+  --color: #ffffff !important;
+}
+
+/* Skupina tlačítek v patičce */
+.button-group {
+  background-color: #121212 !important;
+  /* Zajistí, že pod tlačítky neprosvítá bílá */
+  margin-top: -1px;
+  padding: 10px 20px 25px 20px !important;
+}
+
+/* Odstraní jakékoliv linky v položkách */
+ion-item {
+  --border-style: none !important;
+  --inner-border-style: none !important;
+}
+
+// Tlačítka dole
+.button-group {
+  display: flex;
+  gap: 12px;
+  padding: 15px;
+  background-color: #121212;
+}
+
+.apply-btn {
+  --background: #ffc107 !important;
+  --color: black !important;
+  --border-radius: 12px;
+  flex: 1;
+}
+
+.reset-btn {
+  --color: white !important;
+  --border-color: #444 !important;
+  --border-radius: 12px;
+  flex: 1;
+}
+
+
