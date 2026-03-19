@@ -1,12 +1,18 @@
 // HLAVNÍ KONTEJNER
 ion-content {
   --background: #121212 !important;
+  background: #121212 !important;
+
+  // Vypnutí offsetu, aby se předešlo chybám v konzoli
+  --offset-top: 0px !important;
 }
 
-// HLAVIČKA
+// HLAVIČKA - FIXNÍ POZADÍ A KONSTRUKCE
 ion-header {
-  background-color: #121212;
+  background-color: #121212 !important;
   --background: #121212 !important;
+  box-shadow: none !important;
+  border: none !important;
 
   ion-toolbar {
     --background: #121212 !important;
@@ -28,19 +34,22 @@ ion-header {
   }
 }
 
-// OPRAVA PRO DRUHÝ TOOLBAR (Vyhledávání + Filtr)
+// DRUHÝ TOOLBAR (Search + Filtr) - TADY JE TA MEZERA
 ion-toolbar:last-of-type {
   --background: #121212 !important;
-  padding: 0 10px 10px 10px; // Sjednocený padding pro celý řádek
+
+  // Zvětšený padding vytvoří mezeru nad recepty bez prosvítání bílé
+  padding-bottom: 30px !important;
 
   &::part(container) {
     display: flex;
-    align-items: center; // Toto srovná středové osy
+    align-items: center;
     justify-content: space-between;
     min-height: 56px;
   }
 }
 
+// VYHLEDÁVACÍ PANEL
 .custom-searchbar {
   --background: #1e1e1e !important;
   --color: white !important;
@@ -49,35 +58,38 @@ ion-toolbar:last-of-type {
   --border-radius: 16px;
 
   flex: 1;
-  margin: 0 !important;
-  height: 48px; // Fixní výška searchbaru
+  margin: 0 0 0 10px !important;
+  height: 48px;
 
-  // Odstranění vnitřních paddingů, které searchbar posouvají
   padding-inline-start: 0 !important;
   padding-inline-end: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
+// TLAČÍTKO FILTRU - SROVNANÉ NA STŘED
 .filter-btn {
   --color: #ffffff;
-  margin: 0 0 0 8px !important; // Mezera mezi searchbarem a ikonou
+  margin: 0 5px 0 8px !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px; // Stejná výška jako searchbar zajistí střed
+
+  // Optické doladění k lupě
+  transform: translateY(1px);
+
+  height: 48px;
   min-width: 48px;
   --padding-start: 0;
   --padding-end: 0;
 
-  /* Pokud ikona stále vypadá o pixel výš, pohneme jen vnitřkem */
   ion-icon {
     font-size: 1.6rem;
-    margin-top: 2px; // Jemné doladění na optický střed
+    margin-top: 2px;
   }
 }
 
-// ZBYTEK STYLŮ (Welcome text, Grid, atd.)
+// HLAVIČKA TEXTY
 .header-content {
   padding-left: 10px;
 
@@ -96,6 +108,7 @@ ion-toolbar:last-of-type {
   }
 }
 
+// AVATAR
 .avatar-circle {
   width: 45px;
   height: 45px;
@@ -108,32 +121,21 @@ ion-toolbar:last-of-type {
   margin-right: 15px;
 }
 
-.category-scroll {
-  display: flex;
-  gap: 12px;
-  padding: 20px 16px;
-  overflow-x: auto;
-  background: #121212;
-
-  &::-webkit-scrollbar { display: none; }
-
-  ion-badge {
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.85rem;
-  }
-}
-
+// MŘÍŽKA S RECEPTY - PLYNULÉ NAPOJENÍ
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  padding: 0 16px 20px 16px;
-  background: #121212;
+
+  padding: 0 16px 20px 16px !important;
+  background-color: #121212 !important;
+
   min-height: 100vh;
+  // Zrušíme margin, mezera je v hlavičce
+  margin-top: 0 !important;
 }
 
+// KARTA RECEPTU
 .recipe-item {
   background: #1e1e1e;
   border-radius: 28px;
@@ -154,11 +156,26 @@ ion-toolbar:last-of-type {
 
   .recipe-details {
     padding: 14px;
-    h3 { color: #ffffff; font-size: 0.9rem; font-weight: 600; line-height: 1.2; height: 2.4rem; overflow: hidden; }
+    h3 {
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.2;
+      height: 2.4rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
     .meta-row {
-      display: flex; justify-content: space-between; margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
       .time-info, .level-info {
-        display: flex; align-items: center; color: #9e9e9e; font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        color: #9e9e9e;
+        font-size: 0.7rem;
         ion-icon { color: #ffc107; margin-right: 4px; }
       }
     }
