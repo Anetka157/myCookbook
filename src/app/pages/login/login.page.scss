@@ -1,23 +1,23 @@
 // Takhle přebijeme bílé pozadí
 ion-content {
-  --background: #121212 !important;
+  --background: var(--ion-background-color) !important;
 }
 
 // Horní lišta
 ion-toolbar {
-  --background: #121212;
-  --color: white;
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
   --border-style: none;
 }
 
 .auth-container {
   padding: 20px;
-  background: #121212; // Pojistka pro pozadí
+  background: var(--ion-background-color);
   min-height: 100%;
 }
 
 h1 {
-  color: white !important;
+  color: var(--ion-text-color) !important;
   font-weight: 800;
   font-size: 2.5rem;
 }
@@ -28,10 +28,10 @@ p {
 
 // Styl pro políčka
 .custom-input {
-  --background: #1e1e1e !important;
+  --background: var(--card-background) !important;
+  --color: var(--ion-text-color);
   --border-radius: 16px;
   margin-bottom: 15px;
-  --color: white;
 
   ion-label {
     color: #ffc107 !important; // Žlutý text nade dveřmi

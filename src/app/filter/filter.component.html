@@ -1,15 +1,15 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-title>Filtry</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()" color="light">
+      <ion-button (click)="dismiss()" color="medium">
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content>
   <div class="filter-wrapper">
     <div class="filter-group">
       <label class="group-label">
@@ -56,13 +56,13 @@
   </div> </ion-content>
 
 <ion-footer class="ion-no-border">
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <div class="button-group">
-      <ion-button expand="block" fill="outline" color="medium" class="reset-btn" (click)="resetFilters()">
+      <ion-button fill="outline" color="medium" class="reset-btn" (click)="resetFilters()">
         Zrušit
       </ion-button>
 
-      <ion-button expand="block" class="apply-btn" (click)="applyFilters()">
+      <ion-button class="apply-btn" (click)="applyFilters()">
         Použít
       </ion-button>
     </div>

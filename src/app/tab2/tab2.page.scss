@@ -1,25 +1,17 @@
-// 1. ABSOLUTNÍ ZÁKAZ BÍLÉ (Shadow DOM Fix)
 ion-content {
-  --background: #121212 !important;
-  background: #121212 !important;
+  --background: var(--ion-background-color);
 
-  // Tohle "proleze" dovnitř ion-contentu a obarví to i tam
-  &::part(background) {
-    background: #121212 !important;
-  }
-
-  &::part(scroll) {
-    background: #121212 !important;
+  &::part(background), &::part(scroll) {
+    background: var(--ion-background-color) !important;
   }
 }
 
-// 2. HLAVIČKA (Nadpis a podnadpis)
 .header-content {
   padding: 40px 20px 20px 20px;
-  background: #121212 !important; // Pojistka pozadí
+  background: var(--ion-background-color);
 
   h1 {
-    color: white !important;
+    color: var(--ion-text-color);
     font-size: 2.4rem;
     font-weight: 800;
     margin: 0;
@@ -36,31 +28,30 @@ ion-content {
   }
 }
 
-// 3. MŘÍŽKA RECEPTŮ
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   padding: 0 15px 20px 15px;
-  background: #121212 !important;
+  background: var(--ion-background-color) !important;
 }
 
 .recipe-item {
-  background: #1e1e1e !important;
-  border-radius: 20px; // Více zaoblené jako v Tab 1
+  background: var(--card-background) !important;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); // Výraznější stín
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease;
 
   &:active {
-    transform: scale(0.97); // Efekt při kliknutí
+    transform: scale(0.97);
   }
 
   .image-container {
     position: relative;
-    height: 140px; // Trochu vyšší pro lepší fotky
+    height: 140px;
 
     img {
       width: 100%;
@@ -91,10 +82,10 @@ ion-content {
 
   .recipe-details {
     padding: 12px 12px 18px 12px;
-    background: #1e1e1e;
+    background: var(--card-background);
 
     h3 {
-      color: white !important;
+      color: var(--ion-text-color) !important;
       font-size: 0.95rem;
       font-weight: 600;
       margin: 0 0 10px 0;
@@ -120,7 +111,6 @@ ion-content {
   }
 }
 
-// 4. PRÁZDNÝ STAV (Empty State)
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -128,7 +118,7 @@ ion-content {
   justify-content: center;
   padding: 80px 40px;
   text-align: center;
-  background: #121212 !important;
+  background: var(--ion-background-color);
   min-height: 50vh;
 
   ion-icon {
@@ -138,7 +128,7 @@ ion-content {
   }
 
   h3 {
-    color: white !important;
+    color: var(--ion-text-color);
     font-size: 1.4rem;
     font-weight: 700;
     margin: 0;

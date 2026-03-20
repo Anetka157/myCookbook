@@ -34,61 +34,63 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* @import '@ionic/angular/css/palettes/dark.system.css';
 
-/* TOTÁLNÍ ZÁKAZ BÍLÉ BARVY V CELÉ APPCE */
+/* Základní barvy (Světlý režim) */
 :root {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+  --card-background: #ffffff;
+}
+
+.ion-palette-dark .action-sheet-button-inner {
+  color: inherit !important; /* Nechá barvu textu bílou/žlutou podle nastavení tlačítka */
+}
+
+/* 1. Definice barev pro DARK MODE */
+.ion-palette-dark {
   --ion-background-color: #121212 !important;
-  --ion-background-color-rgb: 18,18,18 !important;
-  background-color: #121212 !important;
-}
+  --ion-text-color: #ffffff !important;
+  --card-background: #1e1e1e !important;
 
-html, body, ion-app, ion-content, ion-router-outlet, .ion-page {
-  --background: #121212 !important;
-  background: #121212 !important;
-  background-color: #121212 !important;
-}
+  .action-sheet-container {
+    --background: #1e1e1e !important;
+    --color: #ffffff !important;
+  }
 
-ion-content::part(background) {
-  background: #121212 !important;
-}
+  .action-sheet-button {
+    --background: #1e1e1e !important;
+    --color: #ffffff !important;
+    color: #ffffff !important;
+  }
 
-/* Oprava pro iOS a Android specifické kontejnery */
-.ion-page-main {
-  background-color: #121212 !important;
-}
+  /* Barva textu při kliknutí/aktivitě */
+  &.action-sheet-selected {
+    color: #ffc107 !important; /* Tvá žlutá pro vybranou položku */
+  }
 
-/* Zajištění, aby i prázdný prostor pod seznamem byl černý */
-.main-content {
-  background-color: #121212 !important;
-  min-height: 100vh;
-}
-
-ion-modal {
-  --background: #121212 !important;
-
-  &::part(content) {
-    background: #121212 !important;
-    border-radius: 20px 20px 0 0;
+  /* Pozadí pod tlačítkem "Cancel" */
+  .action-sheet-group-cancel {
+    --background: #222222 !important;
   }
 }
 
-/* Totální vymazání bílé z modalů */
+/* 2. ODSTRANĚNÍ ŠEDÉHO OKRAJE A BÍLÉHO POZADÍ MODALU */
 ion-modal {
-  --background: #121212 !important;
+  /* Vynucení pozadí pro celý modal */
+  --background: var(--ion-background-color) !important;
 
   &::part(content) {
-    background: #121212 !important;
-    /* Odstraní bílý stín/okraj kolem vnitřku */
-    box-shadow: none !important;
+    background: var(--ion-background-color) !important;
+    box-shadow: none !important; /* Odstraní stín, který může tvořit šedý okraj */
   }
-}
 
-/* Odstranění systémových čar v hlavičkách a patičkách */
-.header-md::after,
-.footer-md::before,
-.header-ios::after,
-.footer-ios::before {
-  display: none !important;
-  content: none !important;
+  /* Zacílení na hlavičku a patičku modalu, které drží ty šedé barvy */
+  ion-header, ion-footer, ion-toolbar {
+    --background: var(--ion-background-color) !important;
+    --color: var(--ion-text-color) !important;
+    --border-style: none !important;
+    background: var(--ion-background-color) !important;
+    border: none !important;
+  }
 }

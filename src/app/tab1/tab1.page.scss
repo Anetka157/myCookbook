@@ -1,29 +1,24 @@
 // HLAVNÍ KONTEJNER
 ion-content {
-  --background: #121212 !important;
-  background: #121212 !important;
-
-  // Vypnutí offsetu, aby se předešlo chybám v konzoli
+  --background: var(--ion-background-color);
   --offset-top: 0px !important;
 }
 
 // HLAVIČKA - FIXNÍ POZADÍ A KONSTRUKCE
 ion-header {
-  background-color: #121212 !important;
-  --background: #121212 !important;
+  background-color: var(--ion-background-color);
+  --background: var(--ion-background-color);
   box-shadow: none !important;
   border: none !important;
 
   ion-toolbar {
-    --background: #121212 !important;
-    --ion-color-base: #121212 !important;
-    --border-style: none !important;
-    background: #121212 !important;
-    color: white;
+    --background: var(--ion-background-color);
+    --border-style: none;
+    color: var(--ion-text-color);
     padding: 10px 5px 0 5px;
 
     &::part(background) {
-      background: #121212 !important;
+      background: var(--ion-background-color);
     }
 
     &::part(container) {
@@ -36,10 +31,8 @@ ion-header {
 
 // DRUHÝ TOOLBAR (Search + Filtr) - TADY JE TA MEZERA
 ion-toolbar:last-of-type {
-  --background: #121212 !important;
-
-  // Zvětšený padding vytvoří mezeru nad recepty bez prosvítání bílé
-  padding-bottom: 30px !important;
+  --background: var(--ion-background-color);
+  padding-bottom: 30px;
 
   &::part(container) {
     display: flex;
@@ -51,8 +44,8 @@ ion-toolbar:last-of-type {
 
 // VYHLEDÁVACÍ PANEL
 .custom-searchbar {
-  --background: #1e1e1e !important;
-  --color: white !important;
+  --background: var(--card-background) !important;
+  --color: var(--ion-text-color) !important;
   --placeholder-color: #666;
   --icon-color: #ffc107;
   --border-radius: 16px;
@@ -97,8 +90,8 @@ ion-toolbar:last-of-type {
     font-size: 1.6rem;
     font-weight: 800;
     margin: 0;
-    color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    color: var(--ion-text-color) !important;
+    text-shadow: none;
   }
 
   .sub-text {
@@ -113,7 +106,7 @@ ion-toolbar:last-of-type {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: #1e1e1e;
+  background: var(--card-background);
   border: 1.5px solid #ffc107;
   display: flex;
   align-items: center;
@@ -128,7 +121,7 @@ ion-toolbar:last-of-type {
   gap: 16px;
 
   padding: 0 16px 20px 16px !important;
-  background-color: #121212 !important;
+  background-color: var(--ion-background-color) !important;
 
   min-height: 100vh;
   // Zrušíme margin, mezera je v hlavičce
@@ -137,7 +130,7 @@ ion-toolbar:last-of-type {
 
 // KARTA RECEPTU
 .recipe-item {
-  background: #1e1e1e;
+  background: var(--card-background);
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -157,7 +150,7 @@ ion-toolbar:last-of-type {
   .recipe-details {
     padding: 14px;
     h3 {
-      color: #ffffff;
+      color: var(--ion-text-color);
       font-size: 0.9rem;
       font-weight: 600;
       line-height: 1.2;

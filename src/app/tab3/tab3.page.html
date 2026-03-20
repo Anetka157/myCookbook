@@ -1,20 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Nastavení
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="profile-header">
+    <div class="avatar-wrapper">
+      <ion-avatar>
+        <img [src]="user?.photoURL || 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
+      </ion-avatar>
+    </div>
+    <h2>{{ user?.displayName || 'Anetka' }}</h2>
+    <p>{{ user?.email }}</p>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Nastavení</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="settings-container">
+    <h3 class="section-title">Nastavení aplikace</h3>
 
-  <ion-button expand="block" class="ion-margin">
-    Načíst nastavení
-  </ion-button>
+    <ion-list lines="none">
+      <ion-item class="settings-item">
+        <ion-icon slot="start" name="notifications-outline"></ion-icon>
+        <ion-label>Upozornění</ion-label>
+        <ion-toggle
+          slot="end"
+          [checked]="notificationsEnabled"
+          (ionChange)="toggleNotifications($event)">
+        </ion-toggle>
+      </ion-item>
 
+      <ion-item class="settings-item">
+        <ion-icon slot="start" name="color-palette-outline"></ion-icon>
+        <ion-label>Tmavý režim</ion-label>
+        <ion-toggle slot="end" [checked]="isDarkMode" (ionChange)="toggleTheme($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item class="settings-item">
+        <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+        <ion-label>Ochrana údajů</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <div class="logout-wrapper">
+      <ion-button (click)="logout()" expand="block" fill="clear" class="logout-btn">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Odhlásit se
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
