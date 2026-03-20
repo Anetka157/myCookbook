@@ -1,0 +1,152 @@
+// 1. ABSOLUTNÍ ZÁKAZ BÍLÉ (Shadow DOM Fix)
+ion-content {
+  --background: #121212 !important;
+  background: #121212 !important;
+
+  // Tohle "proleze" dovnitř ion-contentu a obarví to i tam
+  &::part(background) {
+    background: #121212 !important;
+  }
+
+  &::part(scroll) {
+    background: #121212 !important;
+  }
+}
+
+// 2. HLAVIČKA (Nadpis a podnadpis)
+.header-content {
+  padding: 40px 20px 20px 20px;
+  background: #121212 !important; // Pojistka pozadí
+
+  h1 {
+    color: white !important;
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+  }
+
+  p {
+    color: #ffc107 !important; // Zlatá barva
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+// 3. MŘÍŽKA RECEPTŮ
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 0 15px 20px 15px;
+  background: #121212 !important;
+}
+
+.recipe-item {
+  background: #1e1e1e !important;
+  border-radius: 20px; // Více zaoblené jako v Tab 1
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); // Výraznější stín
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.97); // Efekt při kliknutí
+  }
+
+  .image-container {
+    position: relative;
+    height: 140px; // Trochu vyšší pro lepší fotky
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .heart-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px); // Skleněný efekt
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+
+      ion-icon {
+        font-size: 18px;
+        color: #ff4b4b; // Červené srdíčko
+      }
+    }
+  }
+
+  .recipe-details {
+    padding: 12px 12px 18px 12px;
+    background: #1e1e1e;
+
+    h3 {
+      color: white !important;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      color: #888;
+      font-size: 0.75rem;
+
+      ion-icon {
+        margin-right: 6px;
+        color: #ffc107; // Žlutá ikonka kalendáře
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+// 4. PRÁZDNÝ STAV (Empty State)
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  text-align: center;
+  background: #121212 !important;
+  min-height: 50vh;
+
+  ion-icon {
+    font-size: 80px;
+    color: #2a2a2a; // Tmavě šedá ikona na pozadí
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    color: white !important;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  p {
+    color: #666 !important;
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+}

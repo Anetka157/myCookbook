@@ -1,20 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Oblíbené
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content color="dark">
+  <div class="header-content">
+    <h1>Oblíbené</h1>
+    <p>Tvoje soukromá kuchařka</p>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Oblíbené</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="recipes-grid" *ngIf="favorites.length > 0">
+    <div class="recipe-item" *ngFor="let recipe of favorites">
 
-  <ion-button expand="block" class="ion-margin">
-    Načíst oblíbené
-  </ion-button>
+      <div class="image-container">
+        <img [src]="recipe.image" [routerLink]="['/recipe-detail', recipe.recipeId]" />
+        <div class="heart-badge" (click)="removeFromFavorites(recipe.id)">
+          <ion-icon name="heart" color="danger"></ion-icon>
+        </div>
+      </div>
 
+      <div class="recipe-details" [routerLink]="['/recipe-detail', recipe.recipeId]">
+        <h3>{{ recipe.title }}</h3>
+        <div class="meta-row">
+          <div class="time-info">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>{{ recipe.addedAt?.toDate() | date:'d.M.' }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="favorites.length === 0">
+    <ion-icon name="heart-outline"></ion-icon>
+    <h3>Zatím tu nic nemáš</h3>
+    <p>Utíkej do menu a najdi si něco dobrého!</p>
+  </div>
 </ion-content>
