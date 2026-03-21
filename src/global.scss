@@ -1,91 +1,83 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
+/* Core CSS a importy */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
-
-/* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-/* @import '@ionic/angular/css/palettes/dark.system.css';
-
-/* Základní barvy (Světlý režim) */
+/* -----------------------------------------------------------
+   1. ZÁKLADNÍ NASTAVENÍ BAREV (Světlý režim)
+   ----------------------------------------------------------- */
 :root {
-  --ion-background-color: #ffffff;
+  --ion-background-color: #f4f4f4; /* Jemně šedé pozadí pro světlý režim */
   --ion-text-color: #000000;
-  --card-background: #ffffff;
+  --card-background: #ffffff; /* Bílé karty ve světlém režimu */
 }
 
-.ion-palette-dark .action-sheet-button-inner {
-  color: inherit !important; /* Nechá barvu textu bílou/žlutou podle nastavení tlačítka */
-}
-
-/* 1. Definice barev pro DARK MODE */
-.ion-palette-dark {
+/* -----------------------------------------------------------
+   2. TMAVÝ REŽIM (Aplikuje se přes toggle v Tab3)
+   ----------------------------------------------------------- */
+.dark, .ion-palette-dark {
   --ion-background-color: #121212 !important;
   --ion-text-color: #ffffff !important;
   --card-background: #1e1e1e !important;
+}
 
-  .action-sheet-container {
-    --background: #1e1e1e !important;
-    --color: #ffffff !important;
+/* -----------------------------------------------------------
+   3. SPOLEČNÉ STYLY PRO OVERLAY PRVKY (Alert, Popover, Action Sheet)
+   Tyto prvky nyní používají proměnné, takže se přizpůsobí režimu.
+   ----------------------------------------------------------- */
+
+/* Kontejnery pro Alert, Popover a Action Sheet */
+.alert-wrapper,
+.popover-content,
+.action-sheet-container,
+.action-sheet-group {
+  --background: var(--card-background) !important;
+  --color: var(--ion-text-color) !important;
+  background: var(--card-background) !important;
+  border-radius: 16px !important;
+}
+
+/* Texty v Alertech (Odhlášení) */
+.alert-title, .alert-message {
+  color: var(--ion-text-color) !important;
+}
+
+/* Tlačítka v Alertech a Action Sheetech */
+.alert-button, .action-sheet-button {
+  color: #ffc107 !important; /* Tvá žlutá pro akci */
+  --color: #ffc107 !important;
+
+  /* Text uvnitř tlačítek */
+  .alert-button-inner, .action-sheet-button-inner {
+    color: #ffc107 !important;
   }
 
-  .action-sheet-button {
-    --background: #1e1e1e !important;
-    --color: #ffffff !important;
-    color: #ffffff !important;
-  }
-
-  /* Barva textu při kliknutí/aktivitě */
-  &.action-sheet-selected {
-    color: #ffc107 !important; /* Tvá žlutá pro vybranou položku */
-  }
-
-  /* Pozadí pod tlačítkem "Cancel" */
-  .action-sheet-group-cancel {
-    --background: #222222 !important;
+  /* Červené tlačítko pro zrušení / smazání */
+  &.alert-button-role-cancel, &.action-sheet-group-cancel {
+    color: #eb445a !important;
+    --color: #eb445a !important;
+    .action-sheet-button-inner { color: #eb445a !important; }
   }
 }
 
-/* 2. ODSTRANĚNÍ ŠEDÉHO OKRAJE A BÍLÉHO POZADÍ MODALU */
+/* -----------------------------------------------------------
+   4. ODSTRANĚNÍ ŠEDÝCH OKRAJŮ V MODALECH (Filtry)
+   ----------------------------------------------------------- */
 ion-modal {
-  /* Vynucení pozadí pro celý modal */
   --background: var(--ion-background-color) !important;
 
   &::part(content) {
     background: var(--ion-background-color) !important;
-    box-shadow: none !important; /* Odstraní stín, který může tvořit šedý okraj */
+    box-shadow: none !important;
   }
 
-  /* Zacílení na hlavičku a patičku modalu, které drží ty šedé barvy */
   ion-header, ion-footer, ion-toolbar {
     --background: var(--ion-background-color) !important;
     --color: var(--ion-text-color) !important;

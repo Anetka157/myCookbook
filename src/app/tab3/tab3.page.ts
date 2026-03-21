@@ -12,19 +12,22 @@ import {
   notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline
 } from 'ionicons/icons';
 
+import { AlertController } from '@ionic/angular/standalone';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, IonContent,
+    CommonModule, IonContent, //IonHeader, IonToolbar, IonTitle,
     IonButton, IonIcon, IonItem, IonLabel, IonList, IonAvatar, IonToggle
   ],
 })
 export class Tab3Page implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private alertCtrl = inject(AlertController);
 
   user: any = null;
   // Perzistentní nastavení - tohle učitel chce!
@@ -72,8 +75,34 @@ export class Tab3Page implements OnInit {
     console.log('Nastavení uloženo do localStorage:', this.notificationsEnabled);
   }
 
+  async showPrivacyPolicy() {
+    const alert = await this.alertCtrl.create({
+      header: 'Ochrana osobních údajů',
+      subHeader: 'Zásady zpracování',
+      message: 'Vaše údaje (email a jméno) používáme výhradně pro personalizaci receptů a nejsou sdíleny s třetími stranami. Data jsou bezpečně uložena v databázi Firebase.',
+      buttons: ['Rozumím']
+    });
+
+    await alert.present();
+  }
+
   async logout() {
-    await this.authService.logout();
-    this.router.navigate(['/login']);
+    const alert = await this.alertCtrl.create({
+      header: 'Odhlášení',
+      message: 'Opravdu se chcete odhlásit?',
+      buttons: [
+        { text: 'Zrušit', role: 'cancel' },
+        {
+          text: 'Odhlásit',
+          role: 'confirm',
+          handler: async () => {
+            await this.authService.logout();
+            this.router.navigate(['/login']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
