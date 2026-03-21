@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Přidáno pro checkboxy
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms'; // Přidáno pro checkboxy
 })
 export class RecipeDetailPage implements OnInit {
   recipe: any;
-  instructionsArray: string[] = []; // Tady budeme mít rozsekaný postup
+  instructionsArray: string[] = [];
   private route = inject(ActivatedRoute);
 
   ngOnInit() {
@@ -25,7 +25,6 @@ export class RecipeDetailPage implements OnInit {
       this.recipe = allRecipes.find((r: any) => r.id == id);
 
       if (this.recipe) {
-        // Pokud jsou instrukce string, rozsekáme je podle teček nebo čísel
         if (typeof this.recipe.instructions === 'string') {
           this.instructionsArray = this.recipe.instructions
             .split(/\d+\.|\. /) // Rozdělí podle "1." nebo ". "

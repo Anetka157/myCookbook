@@ -30,7 +30,6 @@ export class Tab3Page implements OnInit {
   private alertCtrl = inject(AlertController);
 
   user: any = null;
-  // Perzistentní nastavení - tohle učitel chce!
   notificationsEnabled: boolean = false;
   isDarkMode: boolean = true;
 
@@ -42,12 +41,10 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit() {
-    // Načtení dat o uživateli z Firebase
     this.authService.user$.subscribe(userData => {
       this.user = userData;
     });
 
-    // NAČTENÍ PERZISTENTNÍCH DAT (z paměti telefonu)
     const savedSettings = localStorage.getItem('user_notifications');
     this.notificationsEnabled = savedSettings === 'true';
 
@@ -62,13 +59,10 @@ export class Tab3Page implements OnInit {
   }
 
   applyTheme() {
-    // Tohle přepne třídu přímo na body aplikace
     document.body.classList.toggle('dark', this.isDarkMode);
-    // Uložíme do paměti
     localStorage.setItem('user-theme', this.isDarkMode ? 'dark' : 'light');
   }
 
-  // ULOŽENÍ PERZISTENTNÍCH DAT
   toggleNotifications(event: any) {
     this.notificationsEnabled = event.detail.checked;
     localStorage.setItem('user_notifications', this.notificationsEnabled.toString());

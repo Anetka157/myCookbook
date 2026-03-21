@@ -1,10 +1,8 @@
-// HLAVNÍ KONTEJNER
 ion-content {
   --background: var(--ion-background-color);
   --offset-top: 0px !important;
 }
 
-// HLAVIČKA - FIXNÍ POZADÍ A KONSTRUKCE
 ion-header {
   background-color: var(--ion-background-color);
   --background: var(--ion-background-color);
@@ -29,7 +27,6 @@ ion-header {
   }
 }
 
-// DRUHÝ TOOLBAR (Search + Filtr) - TADY JE TA MEZERA
 ion-toolbar:last-of-type {
   --background: var(--ion-background-color);
   padding-bottom: 30px;
@@ -42,7 +39,6 @@ ion-toolbar:last-of-type {
   }
 }
 
-// VYHLEDÁVACÍ PANEL
 .custom-searchbar {
   --background: var(--card-background) !important;
   --color: var(--ion-text-color) !important;
@@ -60,7 +56,6 @@ ion-toolbar:last-of-type {
   padding-bottom: 0 !important;
 }
 
-// TLAČÍTKO FILTRU - SROVNANÉ NA STŘED
 .filter-btn {
   --color: #ffffff;
   margin: 0 5px 0 8px !important;
@@ -68,7 +63,6 @@ ion-toolbar:last-of-type {
   align-items: center;
   justify-content: center;
 
-  // Optické doladění k lupě
   transform: translateY(1px);
 
   height: 48px;
@@ -82,7 +76,6 @@ ion-toolbar:last-of-type {
   }
 }
 
-// HLAVIČKA TEXTY
 .header-content {
   padding-left: 10px;
 
@@ -101,7 +94,6 @@ ion-toolbar:last-of-type {
   }
 }
 
-// AVATAR
 .avatar-circle {
   width: 45px;
   height: 45px;
@@ -114,7 +106,6 @@ ion-toolbar:last-of-type {
   margin-right: 15px;
 }
 
-// MŘÍŽKA S RECEPTY - PLYNULÉ NAPOJENÍ
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -124,11 +115,9 @@ ion-toolbar:last-of-type {
   background-color: var(--ion-background-color) !important;
 
   min-height: 100vh;
-  // Zrušíme margin, mezera je v hlavičce
   margin-top: 0 !important;
 }
 
-// KARTA RECEPTU
 .recipe-item {
   background: var(--card-background);
   border-radius: 28px;

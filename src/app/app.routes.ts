@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login', // <--- Teď aplikace začne na login stránce
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {

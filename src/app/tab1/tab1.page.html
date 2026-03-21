@@ -33,8 +33,12 @@
       <div class="image-container">
         <img [src]="recipe.image" alt="{{ recipe.title }}" [routerLink]="['/recipe-detail', recipe.id]" />
         <div class="heart-badge">
-          <ion-button fill="clear" (click)="addToFavorites(recipe); $event.stopPropagation()">
-            <ion-icon slot="icon-only" name="heart-outline" color="danger"></ion-icon>
+          <ion-button fill="clear" (click)="toggleFavorite(recipe); $event.stopPropagation()">
+            <ion-icon
+              slot="icon-only"
+              [name]="isFavorite(recipe.id) ? 'heart' : 'heart-outline'"
+              [color]="isFavorite(recipe.id) ? 'danger' : 'medium'">
+            </ion-icon>
           </ion-button>
         </div>
       </div>
@@ -45,10 +49,10 @@
         <div class="meta-row">
           <div class="time-info">
             <ion-icon name="time-outline"></ion-icon>
-            <span>{{ recipe.readyInMinutes || '30' }} min</span>
+            <span>{{ recipe.readyInMinutes }} min</span>
           </div>
           <div class="level-info">
-            <span>Easy lvl</span>
+            <span>{{ recipe.difficulty }} lvl</span>
           </div>
         </div>
       </div>

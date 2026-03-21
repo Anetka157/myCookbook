@@ -1,32 +1,25 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
-/* Společné barvy pro oba režimy */
 :root {
-  --ion-color-primary: #ffc107; // Tvoje zlatá
+  --ion-color-primary: #ffc107;
   --ion-color-primary-rgb: 255,193,7;
   --ion-color-primary-contrast: #000000;
   --ion-color-primary-shade: #e0aa06;
   --ion-color-primary-tint: #ffc720;
 
-  --ion-color-danger: #ff4b4b; // Červená pro srdíčko a odhlášení
+  --ion-color-danger: #ff4b4b;
 }
 
-/* --- SVĚTLÝ REŽIM (Default) --- */
 body {
   --ion-background-color: #ffffff;
   --ion-text-color: #000000;
 
-  // Barva karet a položek v listu (světle šedá)
   --card-background: #f4f4f4;
   --header-bg: #f8f8f8;
 }
 
-/* --- TMAVÝ REŽIM (Když přidáme třídu .dark) --- */
 body.dark {
   --ion-background-color: #121212;
   --ion-text-color: #ffffff;
 
-  // Barva karet a položek v dark modu
   --card-background: #1e1e1e;
   --header-bg: #121212;
 

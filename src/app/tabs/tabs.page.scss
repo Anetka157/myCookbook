@@ -1,14 +1,12 @@
-// tabs.page.scss
 
 ion-tab-bar {
   --background: var(--ion-background-color);
   --border: none;
   background: var(--ion-background-color);
 
-  // Barva ikon a textu
   ion-tab-button {
     --color: var(--ion-text-color);
-    --color-selected: #ffc107; // Tvá žlutá
+    --color-selected: #ffc107;
     background: var(--ion-background-color);
   }
 }

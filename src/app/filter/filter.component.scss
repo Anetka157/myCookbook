@@ -21,17 +21,13 @@ ion-content {
   --background: var(--card-background) !important;
   --color: var(--ion-text-color) !important;
   --border-radius: 12px;
-  /* Zachování tvého původního šedého okraje */
-  // border: 1px solid rgba(128, 128, 128, 0.2);
   margin-bottom: 10px;
 }
 
-/* TA SPODNÍ LIŠTA VE FILTRU */
 .button-group {
   display: flex;
   gap: 12px;
   padding: 15px 20px 25px 20px !important;
-  /* Změna z natvrdo barvy na proměnnou, aby to splynulo s pozadím */
   background-color: var(--ion-background-color) !important;
   border: none !important;
 }

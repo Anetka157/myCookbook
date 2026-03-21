@@ -8,12 +8,11 @@ export class AuthService {
 
   user$: Observable<User | null> = user(this.auth);
 
-  // Přidán parametr name
   async register(email: string, pass: string, name: string) {
     return runInInjectionContext(this.injector, async () => {
-      // 1. Vytvoříme uživatele
+      // 1. vytvoření  uživatele - email a heslo
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, pass);
-      // 2. Nastavíme mu jméno v jeho profilu
+      // 2. nastavení jména
       if (userCredential.user) {
         await updateProfile(userCredential.user, { displayName: name });
       }

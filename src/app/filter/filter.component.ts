@@ -23,16 +23,13 @@ import {
   ]
 })
 export class FilterComponent {
-  // ModalController přes inject() – už nebude v editoru křičet
   private modalCtrl = inject(ModalController);
 
-  // Proměnné pro obousměrnou vazbu s selecty
   @Input() type: string = '';
   @Input() cuisine: string = '';
   @Input() diet: string = '';
 
   constructor() {
-    // Registrace ikonek, které používáme v HTML
     addIcons({
       restaurantOutline,
       earthOutline,
@@ -41,7 +38,6 @@ export class FilterComponent {
     });
   }
 
-  // Funkce pro potvrzení filtrů a poslání dat zpět
   applyFilters() {
     this.modalCtrl.dismiss({
       type: this.type,
@@ -50,18 +46,15 @@ export class FilterComponent {
     });
   }
 
-  // Funkce pro zavření bez uložení (tlačítko křížek)
   dismiss() {
     this.modalCtrl.dismiss();
   }
 
   resetFilters() {
-    // Vymažeme lokální proměnné v modalu
     this.type = '';
     this.cuisine = '';
     this.diet = '';
 
-    // Zavřeme modal a pošleme prázdné filtry zpět do Tab1
     this.modalCtrl.dismiss({
       type: '',
       cuisine: '',

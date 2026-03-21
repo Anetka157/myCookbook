@@ -1,9 +1,8 @@
-// Takhle přebijeme bílé pozadí
+
 ion-content {
   --background: var(--ion-background-color) !important;
 }
 
-// Horní lišta
 ion-toolbar {
   --background: var(--ion-background-color);
   --color: var(--ion-text-color);
@@ -26,7 +25,6 @@ p {
   color: #a0a0a0 !important;
 }
 
-// Styl pro políčka
 .custom-input {
   --background: var(--card-background) !important;
   --color: var(--ion-text-color);
@@ -34,15 +32,15 @@ p {
   margin-bottom: 15px;
 
   ion-label {
-    color: #ffc107 !important; // Žlutý text nade dveřmi
+    color: #ffc107 !important;
     font-weight: 600;
   }
 }
 
-// ŽLUTÉ TLAČÍTKO - Tady je ta změna
+
 .main-btn {
-  --background: #ffc107 !important; // Sytě žlutá
-  --color: #000000 !important; // Černý text na žluté vypadá nejlíp
+  --background: #ffc107 !important;
+  --color: #000000 !important;
   --border-radius: 16px;
   height: 56px;
   font-weight: 700;

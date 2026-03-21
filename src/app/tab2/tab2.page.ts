@@ -23,7 +23,6 @@ export class Tab2Page {
   async ionViewWillEnter() {
     const user = await firstValueFrom(this.authService.user$);
     if (user) {
-      // Zavoláme tvoji funkci a pošleme tam UID přihlášeného uživatele
       this.dataService.getCollectionData('favorites', user.uid).subscribe(res => {
         this.favorites = res;
         console.log('Moje oblíbené:', this.favorites);
@@ -33,7 +32,6 @@ export class Tab2Page {
 
   removeFromFavorites(docId: string) {
     this.dataService.deleteFromCollection('favorites', docId).subscribe(() => {
-      // Po smazání seznam prostě znovu načteme
       this.ionViewWillEnter();
     });
   }

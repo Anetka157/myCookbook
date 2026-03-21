@@ -9,13 +9,13 @@ import { of } from 'rxjs';
 export class MealService {
   private http = inject(HttpClient);
 
-  // Odkaz na tvůj JSON na Gistu
+  // odkaz na můj JSON na Gistu
   private apiUrl = 'https://corsproxy.io/?https://gist.github.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/763fc3b3ce51393919a7bdf56d03cbfeb5363fad/recipes.json';
 
   getMeals(offset: number = 0, filters: any = {}) {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(allData => {
-        // Uložení do cache pro offline režim
+        // uložení do cache pro offline režim
         localStorage.setItem('my_recipes_cache', JSON.stringify(allData));
         return this.processData(allData, offset, filters);
       }),
@@ -34,23 +34,23 @@ export class MealService {
   private processData(data: any[], offset: number, filters: any) {
     let filtered = [...data];
 
-    // 1. FILTR: Vyhledávání (Text v searchbaru)
+    // 1. filtr pro vyhledávání (searchbar)
     if (filters.query) {
       const q = filters.query.toLowerCase();
       filtered = filtered.filter(m => m.title.toLowerCase().includes(q));
     }
 
-    // 2. FILTR: Typ jídla (Snídaně, Oběd, Dezert...)
+    // 2. filtr pro typ jídla
     if (filters.type && filters.type !== '') {
       const t = filters.type.toLowerCase();
       filtered = filtered.filter(m =>
-        // Hledáme v poli dishTypes (standard Spoonacular) nebo v přímé vlastnosti type
+        // hledání v poli dishTypes
         (m.dishTypes && m.dishTypes.some((dt: string) => dt.toLowerCase().includes(t))) ||
         (m.type && m.type.toLowerCase() === t)
       );
     }
 
-    // 3. FILTR: Kuchyně (Italská, Americká...)
+    // 3. filtr pro kuchyň
     if (filters.cuisine && filters.cuisine !== '') {
       const c = filters.cuisine.toLowerCase();
       filtered = filtered.filter(m =>
@@ -59,7 +59,7 @@ export class MealService {
       );
     }
 
-    // 4. FILTR: Dieta (Vegetariánská, Bezlepková...)
+    // 4. filtr pro dietu
     if (filters.diet && filters.diet !== '') {
       const d = filters.diet.toLowerCase();
       filtered = filtered.filter(m =>
@@ -68,7 +68,7 @@ export class MealService {
       );
     }
 
-    // Stránkování (Pagination)
+    // stránkování (Pagination)
     const results = filtered.slice(offset, offset + 20);
 
     return {

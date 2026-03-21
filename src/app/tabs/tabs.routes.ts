@@ -3,7 +3,7 @@ import { TabsPage } from './tabs.page';
 
 export const routes: Routes = [
   {
-    path: '', // <--- Tady bylo 'tabs', změň to na prázdno
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -23,7 +23,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'tab1', // <--- Odstraněno lomítko pro relativní cestu
+        redirectTo: 'tab1',
         pathMatch: 'full',
       },
     ],

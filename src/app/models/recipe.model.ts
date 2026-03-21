@@ -1,11 +1,11 @@
 export interface Recipe {
-  id?: string | number; // Firebase dává ID jako string, tvoje data mají číslo, tak povolíme obojí
+  id?: string | number;
   title: string;
   image: string;
   type: string;
   cuisine: string;
-  diets: string[];      // Pole řetězců
+  diets: string[];
   description: string;
-  ingredients: string[]; // Pole řetězců
+  ingredients: string[];
   instructions: string;
 }

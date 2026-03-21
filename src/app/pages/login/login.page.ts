@@ -12,10 +12,8 @@ import { AuthService } from 'src/app/core/services/auth';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage {
-  // Stav formuláře
   isRegister = false;
 
-  // Modely
   email = '';
   password = '';
   confirmPassword = '';
