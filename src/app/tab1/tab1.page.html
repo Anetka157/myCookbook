@@ -1,37 +1,50 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="dark">
-    <div class="header-content">
-      <h1 class="welcome-text">Ahoj, {{ userName }}</h1>
-      <p class="sub-text">Co si dnes uvaříme?</p>
-    </div>
-    <ion-buttons slot="end">
+  <ion-toolbar>
+    <div class="header-row-container">
+      <div class="header-content-main">
+        <h1 *ngIf="displayName">Ahoj, {{ displayName }}</h1>
+        <h1 *ngIf="!displayName">Ahoj...</h1>
+        <p>Co si dnes uvaříme?</p>
+      </div>
+
       <div class="avatar-circle">
-        <ion-icon name="restaurant-outline" style="font-size: 24px; color: #ffc107;"></ion-icon>
-      </div> </ion-buttons>
+        <ion-icon name="restaurant-outline"></ion-icon>
+      </div>
+    </div>
   </ion-toolbar>
 
-  <ion-toolbar color="dark">
-    <ion-searchbar
-      [(ngModel)]="searchTerm"
-      (ionInput)="handleSearch()"
-      placeholder="Hledat recept..."
-      class="custom-searchbar">
-    </ion-searchbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="openFilter()" class="filter-btn">
-        <ion-icon name="options-outline"></ion-icon>
+  <ion-toolbar>
+    <div class="search-and-filter-container">
+      <div class="custom-search-wrapper">
+        <ion-icon name="search-outline"></ion-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="handleSearch()"
+          placeholder="Hledat recept..."
+        />
+
+        <ion-icon
+          *ngIf="searchTerm && searchTerm.length > 0"
+          name="close-circle-outline"
+          class="clear-icon"
+          (click)="clearSearch()">
+        </ion-icon>
+      </div>
+
+      <ion-button (click)="openFilter()" fill="clear" class="filter-btn-new">
+        <ion-icon slot="icon-only" name="options-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" color="dark">
+<ion-content [scrollEvents]="true" (ionScroll)="onContentScroll($event)">
 
   <div class="recipes-grid">
-    <div class="recipe-item" *ngFor="let recipe of recipes">
-
-      <div class="image-container">
-        <img [src]="recipe.image" alt="{{ recipe.title }}" [routerLink]="['/recipe-detail', recipe.id]" />
+    <div class="recipe-item" *ngFor="let recipe of recipes; trackBy: trackByFn">
+      <div class="image-container" [routerLink]="['/recipe-detail', recipe.id]">
+        <img [src]="recipe.image" alt="{{ recipe.title }}" />
         <div class="heart-badge">
           <ion-button fill="clear" (click)="toggleFavorite(recipe); $event.stopPropagation()">
             <ion-icon
@@ -45,7 +58,6 @@
 
       <div class="recipe-details" [routerLink]="['/recipe-detail', recipe.id]">
         <h3>{{ recipe.title }}</h3>
-
         <div class="meta-row">
           <div class="time-info">
             <ion-icon name="time-outline"></ion-icon>
@@ -56,16 +68,15 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <ion-infinite-scroll
-    threshold="100px"
-    (ionInfinite)="loadMore($event)"
-    [disabled]="recipes.length >= totalRecipes">
-    <ion-infinite-scroll-content loadingSpinner="bubbles">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <div class="custom-loader-overlay" *ngIf="isLoading && recipes.length < totalRecipes">
+    <ion-spinner name="bubbles" color="warning"></ion-spinner>
+  </div>
+
+  <div *ngIf="recipes.length >= totalRecipes && totalRecipes > 0" class="footer-text">
+    To je vše, co jsme v kuchařce našli 🍳
+  </div>
 
 </ion-content>

@@ -11,7 +11,6 @@
 body {
   --ion-background-color: #ffffff;
   --ion-text-color: #000000;
-
   --card-background: #f4f4f4;
   --header-bg: #f8f8f8;
 }
@@ -19,9 +18,17 @@ body {
 body.dark {
   --ion-background-color: #121212;
   --ion-text-color: #ffffff;
-
   --card-background: #1e1e1e;
   --header-bg: #121212;
+
+  --ion-color-step-50: #1e1e1e;
+  --ion-color-step-100: #2a2a2a;
+  --ion-color-step-150: #363636;
+  --ion-color-step-200: #414141;
+
+  --ion-item-background: #1e1e1e;
+  --ion-toolbar-background: #121212;
+
 
   ion-content {
     --background: #121212;

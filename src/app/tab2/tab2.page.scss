@@ -1,5 +1,8 @@
 ion-content {
+  --padding-top: 50px;
   --background: var(--ion-background-color);
+  --offset-top: 0px !important;
+
 
   &::part(background), &::part(scroll) {
     background: var(--ion-background-color) !important;
@@ -31,8 +34,8 @@ ion-content {
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  padding: 0 15px 20px 15px;
+  gap: 16px;
+  padding: 10px 16px 120px 16px;
   background: var(--ion-background-color) !important;
 }
 
@@ -61,12 +64,12 @@ ion-content {
 
     .heart-badge {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      width: 34px;
-      height: 34px;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -86,7 +89,7 @@ ion-content {
 
     h3 {
       color: var(--ion-text-color) !important;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
       margin: 0 0 10px 0;
       line-height: 1.3;

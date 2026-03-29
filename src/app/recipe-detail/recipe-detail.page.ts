@@ -1,8 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { addIcons } from 'ionicons';
+import {
+  arrowBack,      // Tato chybí pro tu šipku zpět!
+  timeOutline,
+  flameOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,9 +19,25 @@ import { FormsModule } from '@angular/forms';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class RecipeDetailPage implements OnInit {
+
   recipe: any;
   instructionsArray: string[] = [];
+
   private route = inject(ActivatedRoute);
+  private navCtrl = inject(NavController);
+
+  constructor() {
+    addIcons({
+      'arrow-back': arrowBack,
+      'time-outline': timeOutline,
+      'flame-outline': flameOutline
+    });
+  }
+
+  goBack() {
+    this.navCtrl.navigateBack('/tabs/tab1');
+  }
+
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');

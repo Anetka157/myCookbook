@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   personCircleOutline, mailOutline, logOutOutline,
-  notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline
+  notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline, person, personOutline
 } from 'ionicons/icons';
 
 import { AlertController } from '@ionic/angular/standalone';
@@ -21,7 +21,7 @@ import { AlertController } from '@ionic/angular/standalone';
   standalone: true,
   imports: [
     CommonModule, IonContent, //IonHeader, IonToolbar, IonTitle,
-    IonButton, IonIcon, IonItem, IonLabel, IonList, IonAvatar, IonToggle
+    IonButton, IonIcon, IonItem, IonLabel, IonList, IonToggle
   ],
 })
 export class Tab3Page implements OnInit {
@@ -35,8 +35,14 @@ export class Tab3Page implements OnInit {
 
   constructor() {
     addIcons({
-      personCircleOutline, mailOutline, logOutOutline,
-      notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline
+      personCircleOutline,
+      mailOutline,
+      logOutOutline,
+      notificationsOutline,
+      colorPaletteOutline,
+      shieldCheckmarkOutline,
+      'person': person,
+      'person-outline': personOutline
     });
   }
 
@@ -49,7 +55,7 @@ export class Tab3Page implements OnInit {
     this.notificationsEnabled = savedSettings === 'true';
 
     const theme = localStorage.getItem('user-theme');
-    this.isDarkMode = theme === 'dark' || theme === null; // Pokud nic není, dáme dark
+    this.isDarkMode = theme === 'dark' || theme === null;
     this.applyTheme();
   }
 
@@ -85,6 +91,7 @@ export class Tab3Page implements OnInit {
       header: 'Odhlášení',
       message: 'Opravdu se chcete odhlásit?',
       buttons: [
+
         { text: 'Zrušit', role: 'cancel' },
         {
           text: 'Odhlásit',

@@ -9,17 +9,17 @@ import { of } from 'rxjs';
 export class MealService {
   private http = inject(HttpClient);
 
-  // odkaz na můj JSON na Gistu
-  private apiUrl = 'https://corsproxy.io/?https://gist.github.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/763fc3b3ce51393919a7bdf56d03cbfeb5363fad/recipes.json';
-
+  // OPRAVENO: Odstraněna nefunkční proxy. GitHub Gist Raw funguje přímo.
+  private apiUrl = 'https://gist.githubusercontent.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/41e078ace862db489fee34a5973d22c2ff3a44e8/recipes.json';
   getMeals(offset: number = 0, filters: any = {}) {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(allData => {
-        // uložení do cache pro offline režim
+
         localStorage.setItem('my_recipes_cache', JSON.stringify(allData));
         return this.processData(allData, offset, filters);
       }),
       catchError(err => {
+        console.error('Chyba při načítání z GitHubu, zkouším cache:', err);
         const cachedData = localStorage.getItem('my_recipes_cache');
         if (cachedData) {
           const allData = JSON.parse(cachedData);
@@ -34,17 +34,16 @@ export class MealService {
   private processData(data: any[], offset: number, filters: any) {
     let filtered = [...data];
 
-    // 1. filtr pro vyhledávání (searchbar)
+    // 1. filtr pro vyhledávání
     if (filters.query) {
       const q = filters.query.toLowerCase();
-      filtered = filtered.filter(m => m.title.toLowerCase().includes(q));
+      filtered = filtered.filter(m => m.title && m.title.toLowerCase().includes(q));
     }
 
     // 2. filtr pro typ jídla
     if (filters.type && filters.type !== '') {
       const t = filters.type.toLowerCase();
       filtered = filtered.filter(m =>
-        // hledání v poli dishTypes
         (m.dishTypes && m.dishTypes.some((dt: string) => dt.toLowerCase().includes(t))) ||
         (m.type && m.type.toLowerCase() === t)
       );
@@ -68,7 +67,6 @@ export class MealService {
       );
     }
 
-    // stránkování (Pagination)
     const results = filtered.slice(offset, offset + 20);
 
     return {

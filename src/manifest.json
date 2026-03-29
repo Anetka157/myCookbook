@@ -1,0 +1,16 @@
+{
+  "name": "Moje Kuchařka",
+  "short_name": "Kuchařka",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#121212",
+  "theme_color": "#ffc107",
+  "icons": [
+  {
+    "src": "assets/icon/apple-touch-icon.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+    }
+  ]
+}

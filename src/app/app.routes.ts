@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'tabs/tab1',
     pathMatch: 'full',
   },
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
   {
-    path: 'tabs', // <--- Taby posuneme na tuhle cestu
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
   },
   {

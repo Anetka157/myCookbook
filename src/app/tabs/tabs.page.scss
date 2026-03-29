@@ -3,10 +3,24 @@ ion-tab-bar {
   --background: var(--ion-background-color);
   --border: none;
   background: var(--ion-background-color);
+  height: calc(45px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   ion-tab-button {
     --color: var(--ion-text-color);
     --color-selected: #ffc107;
     background: var(--ion-background-color);
+
+    ion-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    ion-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: none;
+    }
   }
 }

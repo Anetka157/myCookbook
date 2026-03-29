@@ -6,6 +6,9 @@ import { DataService } from 'src/app/services/data';
 import { AuthService } from 'src/app/core/services/auth';
 import { firstValueFrom } from 'rxjs';
 
+import { addIcons } from 'ionicons';
+import { heart, heartOutline, calendarOutline } from 'ionicons/icons';
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -17,6 +20,14 @@ import { firstValueFrom } from 'rxjs';
 export class Tab2Page {
   private dataService = inject(DataService);
   private authService = inject(AuthService);
+
+  constructor() {
+    addIcons({
+      heart,
+      'heart-outline': heartOutline,
+      'calendar-outline': calendarOutline
+    });
+  }
 
   favorites: any[] = [];
 

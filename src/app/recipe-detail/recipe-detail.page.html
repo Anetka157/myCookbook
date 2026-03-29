@@ -1,8 +1,13 @@
 <ion-content>
+
+  <div class="custom-back-circle" (click)="goBack()">
+    <ion-icon name="arrow-back"></ion-icon>
+  </div>
+
   <div class="recipe-header">
     <img [src]="recipe?.image" />
     <div class="gradient-overlay"></div>
-    <ion-back-button defaultHref="/tabs/tab1" text="" color="light" class="back-btn"></ion-back-button>
+
   </div>
 
   <div class="recipe-body" *ngIf="recipe">
@@ -13,11 +18,11 @@
       <div class="meta-info">
         <div class="info-item">
           <ion-icon name="time-outline"></ion-icon>
-          <span>{{ recipe.time || '30' }} min</span>
+          <span>{{ recipe.readyInMinutes }} min</span>
         </div>
         <div class="info-item">
           <ion-icon name="flame-outline"></ion-icon>
-          <span>{{ recipe.difficulty || 'Easy' }}</span>
+          <span>{{ recipe.difficulty }} lvl</span>
         </div>
       </div>
     </div>

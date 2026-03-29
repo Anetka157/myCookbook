@@ -18,6 +18,29 @@
 }
 
 
+
+ion-content {
+  --keyboard-offset: 0px;
+  cursor: text !important;
+  pointer-events: auto;
+}
+
+ion-input, ion-textarea, input {
+  pointer-events: auto !important;
+  --user-select: text !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  z-index: 9999 !important;
+}
+
+
+textarea, [contenteditable] {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+
+
 .dark, .ion-palette-dark {
   --ion-background-color: #121212 !important;
   --ion-text-color: #ffffff !important;

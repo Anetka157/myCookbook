@@ -1,9 +1,7 @@
 <ion-content>
   <div class="profile-header">
-    <div class="avatar-wrapper">
-      <ion-avatar>
-        <img [src]="user?.photoURL || 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
-      </ion-avatar>
+    <div class="avatar-circle">
+      <ion-icon name="person"></ion-icon>
     </div>
     <h2>{{ user?.displayName || 'Anetka' }}</h2>
     <p>{{ user?.email }}</p>

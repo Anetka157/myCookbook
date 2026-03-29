@@ -1,8 +1,25 @@
 ion-content {
   --background: var(--ion-background-color);
+  --padding-top: 50px;
 
   &::part(background) {
     background: var(--ion-background-color) !important;
+  }
+}
+
+.avatar-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ffc409;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+
+  ion-icon {
+    font-size: 60px;
+    color: var(--ion-text-color);
   }
 }
 

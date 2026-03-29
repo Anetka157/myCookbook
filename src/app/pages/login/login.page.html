@@ -12,33 +12,41 @@
     </div>
 
     <div class="form-container">
-      <ion-item lines="none" class="custom-input" *ngIf="isRegister">
-        <ion-label position="stacked">Jméno</ion-label>
-        <ion-input type="text" [(ngModel)]="displayName" placeholder="Tvoje jméno"></ion-input>
-      </ion-item>
 
-      <ion-item lines="none" class="custom-input">
-        <ion-label position="stacked">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" placeholder="vas@email.cz"></ion-input>
-      </ion-item>
+      <div class="custom-input-wrapper" *ngIf="isRegister">
+        <label>Jméno</label>
+        <input type="text" [(ngModel)]="displayName" placeholder="Tvoje jméno">
+      </div>
 
-      <ion-item lines="none" class="custom-input">
-        <ion-label position="stacked">Heslo</ion-label>
-        <ion-input type="password" [(ngModel)]="password" placeholder="********"></ion-input>
-      </ion-item>
+      <div class="custom-input-wrapper">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" placeholder="vas@email.cz">
+      </div>
 
-      <ion-item lines="none" class="custom-input" *ngIf="isRegister">
-        <ion-label position="stacked">Potvrzení hesla</ion-label>
-        <ion-input type="password" [(ngModel)]="confirmPassword" placeholder="********"></ion-input>
-      </ion-item>
+      <div class="custom-input-wrapper">
+        <label>Heslo</label>
+        <input type="password" [(ngModel)]="password" placeholder="********">
+        <p class="input-hint" *ngIf="isRegister">Min. 8 znaků, velké písmeno a číslo</p>
+      </div>
 
-      <ion-button expand="block" (click)="isRegister ? onRegister() : onLogin()" class="main-btn">
-        {{ isRegister ? 'Zaregistrovat se' : 'Přihlásit se' }}
-      </ion-button>
+      <div class="custom-input-wrapper" *ngIf="isRegister">
+        <label>Potvrzení hesla</label>
+        <input type="password" [(ngModel)]="confirmPassword" placeholder="********">
+        <p class="input-hint error" *ngIf="password !== confirmPassword && confirmPassword.length > 0">
+          Hesla se neshodují
+        </p>
+      </div>
 
-      <ion-button expand="block" fill="clear" (click)="toggleMode()" class="toggle-btn">
-        {{ isRegister ? 'Už máš účet? Přihlas se' : 'Nemáš účet? Vytvoř si ho' }}
-      </ion-button>
+      <div class="button-section">
+        <ion-button expand="block" (click)="isRegister ? onRegister() : onLogin()" class="main-btn">
+          {{ isRegister ? 'Zaregistrovat se' : 'Přihlásit se' }}
+        </ion-button>
+
+        <ion-button expand="block" fill="clear" (click)="toggleMode()" class="toggle-btn">
+          {{ isRegister ? 'Už máš účet? Přihlas se' : 'Nemáš účet? Vytvoř si ho' }}
+        </ion-button>
+      </div>
+
     </div>
   </div>
 </ion-content>
