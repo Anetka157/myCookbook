@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'tabs/tab1',
+    redirectTo: 'tabs/tab1', // ZMĚNA: Startujeme na hlavní stránce, ne na loginu
     pathMatch: 'full',
   },
   {

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MealService } from 'src/app/core/services/meal.service';
 import { FilterComponent } from 'src/app/filter/filter.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data';
 import { AuthService } from 'src/app/core/services/auth';
 import { firstValueFrom } from 'rxjs';
@@ -31,8 +31,10 @@ export class Tab1Page implements OnInit {
   private authService = inject(AuthService);
   private firestore = inject(Firestore);
   private cd = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   public displayName: string = '';
+  public isOnline: boolean = navigator.onLine;
 
   recipes: any[] = [];
   favoriteIds: number[] = [];
@@ -58,26 +60,47 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    this.loadMeals(false);
-    this.loadUserData();
-    this.loadFavorites();
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+      this.cd.detectChanges();
+    });
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+      this.cd.detectChanges();
+    });
 
+    this.authService.user$.subscribe(user => {
+      if (!user) {
+        console.log('Uživatel není přihlášen, přesun na login screen.');
+        this.router.navigate(['/login']);
+      } else {
+        console.log('Uživatel ověřen přes AuthService:', user.email);
+        if (this.recipes.length === 0) {
+          this.loadMeals(false);
+        }
+        this.loadUserData();
+        this.loadFavorites();
+      }
+    });
   }
 
   ionViewWillEnter() {
-    this.loadFavorites();
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.loadFavorites();
+      }
+    });
   }
 
   trackByFn(index: number, item: any) {
     return item.id;
   }
 
-
   clearSearch() {
-    this.searchTerm = ''; // Vymaže text
-    this.offset = 0;      // Resetuje stránkování
-    this.recipes = [];    // Vyčistí aktuální seznam
-    this.loadMeals(false); // načte základní seznam bez filtrů
+    this.searchTerm = '';
+    this.offset = 0;
+    this.recipes = [];
+    this.loadMeals(false);
   }
 
   loadMeals(append: boolean = false) {
@@ -95,7 +118,6 @@ export class Tab1Page implements OnInit {
         }
 
         this.totalRecipes = res.total;
-
         this.isLoading = false;
         this.cd.detectChanges();
       },
@@ -112,22 +134,14 @@ export class Tab1Page implements OnInit {
     this.loadMeals(false);
   }
 
-
-  onContentScroll(event: any) {
+  // 🔥 PŘIDÁNO: Nová čistá funkce pro tlačítko
+  loadMoreRecipes() {
     if (this.isLoading || this.recipes.length >= this.totalRecipes) {
       return;
     }
-
-    const scrollTop = event.detail.scrollTop;
-    const scrollHeight = event.target.scrollHeight;
-    const clientHeight = event.target.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight - 300) {
-      this.offset = this.recipes.length;
-      this.loadMeals(true);
-    }
+    this.offset = this.recipes.length;
+    this.loadMeals(true);
   }
-
 
   async openFilter() {
     const modal = await this.modalCtrl.create({
@@ -142,16 +156,11 @@ export class Tab1Page implements OnInit {
     }
   }
 
-
-
   loadUserData() {
     this.authService.user$.subscribe(user => {
       if (user) {
-        setTimeout(() => {
-          const nameFromEmail = user.email?.split('.')[0] || 'Kuchaři';
-          this.displayName = user.displayName || nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
-          this.cd.detectChanges();
-        }, 0);
+        const nameFromEmail = user.email?.split('.')[0] || 'Kuchaři';
+        this.displayName = user.displayName || nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
       }
     });
   }

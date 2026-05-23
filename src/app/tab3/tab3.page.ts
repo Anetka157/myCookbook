@@ -20,7 +20,7 @@ import { AlertController } from '@ionic/angular/standalone';
   styleUrls: ['tab3.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, IonContent, //IonHeader, IonToolbar, IonTitle,
+    CommonModule, IonContent, IonHeader, IonToolbar,
     IonButton, IonIcon, IonItem, IonLabel, IonList, IonToggle
   ],
 })
@@ -29,6 +29,7 @@ export class Tab3Page implements OnInit {
   private router = inject(Router);
   private alertCtrl = inject(AlertController);
 
+  public isOnline: boolean = navigator.onLine;
   user: any = null;
   notificationsEnabled: boolean = false;
   isDarkMode: boolean = true;
@@ -47,6 +48,10 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit() {
+    // Sledování sítě
+    window.addEventListener('online', () => this.isOnline = true);
+    window.addEventListener('offline', () => this.isOnline = false);
+
     this.authService.user$.subscribe(userData => {
       this.user = userData;
     });
@@ -91,7 +96,6 @@ export class Tab3Page implements OnInit {
       header: 'Odhlášení',
       message: 'Opravdu se chcete odhlásit?',
       buttons: [
-
         { text: 'Zrušit', role: 'cancel' },
         {
           text: 'Odhlásit',

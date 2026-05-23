@@ -1,6 +1,6 @@
 ion-content {
+  --padding-top: 0px; // Vynulováno, přebíráme systém z tab2
   --background: var(--ion-background-color);
-  --padding-top: 50px;
 
   &::part(background) {
     background: var(--ion-background-color) !important;
@@ -24,9 +24,16 @@ ion-content {
 }
 
 .profile-header {
-  padding: 60px 20px 30px 20px;
-  text-align: center;
   background: var(--ion-background-color);
+  margin-top: 0px !important;
+  // 1. STAV (ONLINE): Systémový výpočet z tab2, spodní padding upraven na 30px pro hezký odstup od podnadpisu
+  padding: calc(env(safe-area-inset-top) + 30px) 20px 30px 20px;
+  text-align: center;
+
+  // 2. STAV (OFFLINE): Přesně ta hodnota, která ti zachránila tab2!
+  &.is-offline {
+    margin-top: -20px !important;
+  }
 
   .avatar-wrapper {
     display: flex;
@@ -107,4 +114,31 @@ ion-content {
     font-size: 1rem;
     letter-spacing: 0.5px;
   }
+}
+
+// JEDNOTNÁ KÁVOVÁ OFFLINE LIŠTA (PŘEVZATO Z TAB2/TAB1)
+.offline-toolbar {
+  --background: #3c1d1a !important;
+  background: #3c1d1a !important;
+  --color: #ffffff !important;
+  color: #ffffff !important;
+  min-height: auto !important;
+
+  &::part(container) {
+    background: #3c1d1a !important;
+    background-color: #3c1d1a !important;
+  }
+
+  ::ng-deep .toolbar-background {
+    background: #3c1d1a !important;
+    background-color: #3c1d1a !important;
+  }
+}
+
+.offline-text {
+  padding: 6px 10px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
 }

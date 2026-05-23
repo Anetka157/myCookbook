@@ -1,4 +1,10 @@
-<ion-header class="ion-no-border">
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar *ngIf="!isOnline" class="offline-toolbar">
+    <div class="offline-text">
+      Pracujete v offline režimu (data se načítají z paměti)
+    </div>
+  </ion-toolbar>
+
   <ion-toolbar>
     <div class="header-row-container">
       <div class="header-content-main">
@@ -39,7 +45,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" (ionScroll)="onContentScroll($event)">
+<ion-content>
 
   <div class="recipes-grid">
     <div class="recipe-item" *ngFor="let recipe of recipes; trackBy: trackByFn">
@@ -69,6 +75,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!isLoading && recipes.length < totalRecipes" class="load-more-container">
+    <ion-button (click)="loadMoreRecipes()" fill="outline" color="warning" class="load-more-btn">
+      Načíst další recepty 🍳
+    </ion-button>
   </div>
 
   <div class="custom-loader-overlay" *ngIf="isLoading && recipes.length < totalRecipes">

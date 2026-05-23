@@ -1,5 +1,5 @@
 ion-content {
-  --padding-top: 50px;
+  --padding-top: 0px;
   --background: var(--ion-background-color);
   --offset-top: 0px !important;
 
@@ -10,8 +10,12 @@ ion-content {
 }
 
 .header-content {
-  padding: 40px 20px 20px 20px;
   background: var(--ion-background-color);
+  margin-top: 0px !important;
+  padding: calc(env(safe-area-inset-top) + 30px) 20px 20px 20px;
+
+  &.is-offline {
+    margin-top: -20px !important;  }
 
   h1 {
     color: var(--ion-text-color);
@@ -31,6 +35,16 @@ ion-content {
   }
 }
 
+:host-context(ion-content) {
+  font-size: 100%;
+}
+
+ion-header:has(.offline-toolbar) + ion-content {
+  .header-content {
+    padding-top: calc(env(safe-area-inset-top) - 5px) !important;
+  }
+}
+
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -46,6 +60,7 @@ ion-content {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
+  height: 100%;
   transition: transform 0.2s ease;
 
   &:active {
@@ -55,6 +70,7 @@ ion-content {
   .image-container {
     position: relative;
     height: 140px;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -84,8 +100,13 @@ ion-content {
   }
 
   .recipe-details {
-    padding: 12px 12px 18px 12px;
+    padding: 12px 12px 14px 12px;
     background: var(--card-background);
+
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 78px;
 
     h3 {
       color: var(--ion-text-color) !important;
@@ -102,6 +123,7 @@ ion-content {
     .meta-row {
       display: flex;
       align-items: center;
+      margin-top: auto !important;
       color: #888;
       font-size: 0.75rem;
 
@@ -142,4 +164,24 @@ ion-content {
     margin-top: 10px;
     font-size: 1rem;
   }
+}
+
+.offline-toolbar {
+  --background: #3c1d1a !important;
+  background: #3c1d1a !important;
+  --color: white !important;
+  color: white !important;
+  min-height: auto !important;
+
+  ::ng-deep .toolbar-background {
+    background: #3c1d1a !important;
+  }
+}
+
+.offline-text {
+  padding: 6px 10px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
 }

@@ -1,5 +1,13 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar *ngIf="!isOnline" class="offline-toolbar">
+    <div class="offline-text">
+      Pracujete v offline režimu (data se načítají z paměti)
+    </div>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <div class="profile-header">
+  <div class="profile-header" [class.is-offline]="!isOnline">
     <div class="avatar-circle">
       <ion-icon name="person"></ion-icon>
     </div>
@@ -17,7 +25,7 @@
         <ion-toggle
           slot="end"
           [checked]="notificationsEnabled"
-          (ionChange)="toggleNotifications($event)">
+          (ionChange) = "toggleNotifications($event)">
         </ion-toggle>
       </ion-item>
 

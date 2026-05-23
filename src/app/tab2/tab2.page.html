@@ -1,5 +1,13 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar *ngIf="!isOnline" class="offline-toolbar">
+    <div class="offline-text">
+      Pracujete v offline režimu (data se načítají z paměti)
+    </div>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content color="dark">
-  <div class="header-content">
+  <div class="header-content" [class.is-offline]="!isOnline">
     <h1>Oblíbené</h1>
     <p>Tvoje soukromá kuchařka</p>
   </div>

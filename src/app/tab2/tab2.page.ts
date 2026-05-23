@@ -21,17 +21,27 @@ export class Tab2Page {
   private dataService = inject(DataService);
   private authService = inject(AuthService);
 
+  // 1. Přidání proměnné pro stav sítě
+  public isOnline: boolean = navigator.onLine;
+
   constructor() {
     addIcons({
       heart,
       'heart-outline': heartOutline,
       'calendar-outline': calendarOutline
     });
+
+    // 2. Sledování změn sítě za běhu aplikace
+    window.addEventListener('online', () => this.isOnline = true);
+    window.addEventListener('offline', () => this.isOnline = false);
   }
 
   favorites: any[] = [];
 
   async ionViewWillEnter() {
+    // 3. Pojistka: při každém vstupu na stránku zkontrolujeme aktuální reálný stav
+    this.isOnline = navigator.onLine;
+
     const user = await firstValueFrom(this.authService.user$);
     if (user) {
       this.dataService.getCollectionData('favorites', user.uid).subscribe(res => {
