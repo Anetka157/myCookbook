@@ -23,6 +23,7 @@
     <div class="search-and-filter-container">
       <div class="custom-search-wrapper">
         <ion-icon name="search-outline"></ion-icon>
+
         <input
           type="text"
           [(ngModel)]="searchTerm"
@@ -30,17 +31,25 @@
           placeholder="Hledat recept..."
         />
 
-        <ion-icon
+        <!-- Přesunuto do vlastního klikacího kontejneru vedle inputu -->
+        <div
           *ngIf="searchTerm && searchTerm.length > 0"
-          name="close-circle-outline"
-          class="clear-icon"
-          (click)="clearSearch()">
-        </ion-icon>
+          class="clear-icon-container"
+          (click)="clearSearch(); $event.stopPropagation()">
+          <ion-icon name="close-circle-outline" class="clear-icon"></ion-icon>
+        </div>
       </div>
 
-      <ion-button (click)="openFilter()" fill="clear" class="filter-btn-new">
-        <ion-icon slot="icon-only" name="options-outline"></ion-icon>
-      </ion-button>
+      <div class="filter-btn-new" (click)="openFilter()">
+        <ion-icon name="options-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div class="active-filters-container" *ngIf="hasActiveFilters()">
+      <div *ngFor="let key of getActiveFiltersKeys()" class="filter-chip">
+        <span>{{ getFilterLabel(key) }}</span>
+        <ion-icon name="close-circle-outline" (click)="removeFilter(key)"></ion-icon>
+      </div>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -79,7 +88,7 @@
 
   <div *ngIf="!isLoading && recipes.length < totalRecipes" class="load-more-container">
     <ion-button (click)="loadMoreRecipes()" fill="outline" color="warning" class="load-more-btn">
-      Načíst další recepty 🍳
+      Načíst další recepty
     </ion-button>
   </div>
 

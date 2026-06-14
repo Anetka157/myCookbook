@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
-  IonHeader, IonToolbar, IonTitle, IonContent, IonButton,
-  IonIcon, IonItem, IonLabel, IonList, IonAvatar, IonToggle
+  IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToggle
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/core/services/auth';
 import { CommonModule } from '@angular/common';
@@ -9,7 +8,8 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   personCircleOutline, mailOutline, logOutOutline,
-  notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline, person, personOutline
+  notificationsOutline, colorPaletteOutline, shieldCheckmarkOutline,
+  person, personOutline, chevronForwardOutline // 🔥 Přidána šipka pro Ochranu údajů
 } from 'ionicons/icons';
 
 import { AlertController } from '@ionic/angular/standalone';
@@ -21,7 +21,7 @@ import { AlertController } from '@ionic/angular/standalone';
   standalone: true,
   imports: [
     CommonModule, IonContent, IonHeader, IonToolbar,
-    IonButton, IonIcon, IonItem, IonLabel, IonList, IonToggle
+    IonButton, IonIcon, IonToggle // 🧼 Vyčištěno od IonList a IonItem
   ],
 })
 export class Tab3Page implements OnInit {
@@ -42,6 +42,7 @@ export class Tab3Page implements OnInit {
       notificationsOutline,
       colorPaletteOutline,
       shieldCheckmarkOutline,
+      chevronForwardOutline, // 🔥 Zaregistrování šipky
       'person': person,
       'person-outline': personOutline
     });

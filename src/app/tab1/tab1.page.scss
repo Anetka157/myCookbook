@@ -1,10 +1,16 @@
 .offline-toolbar {
-  --background: #e74c3c !important;
+  --background: #3c1d1a !important;
   --color: white !important;
+  background: #3c1d1a !important;
+  color: white !important;
   min-height: auto !important;
 
+  &::part(background) {
+    background: #3c1d1a !important;
+  }
+
   ::ng-deep .toolbar-background {
-    background: #e74c3c !important;
+    background: #3c1d1a !important;
   }
 }
 
@@ -38,66 +44,96 @@ ion-header {
 .search-and-filter-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 0 8px 10px 16px;
-  background: var(--ion-background-color);
+  padding: 0 16px 10px 16px;
+  background: transparent !important;
+  box-sizing: border-box;
 }
 
 .custom-search-wrapper {
-  position: relative;
   display: flex;
   align-items: center;
   flex: 1;
   background: var(--ion-color-step-100, #f2f2f2);
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 0 12px; /* Změna paddingu na nulu nahoře/dole, drží to výška wrapperu */
   height: 48px;
+  box-sizing: border-box;
+  margin-left: -4px !important;
+  margin-right: 0 !important;
 
   ion-icon {
     font-size: 20px;
     color: #ffc107;
     margin-right: 8px;
+    flex-shrink: 0; /* Ikona lupy se nesmí smrštit */
   }
 
   input {
-    padding-right: 30px;
     flex: 1;
     border: none;
     background: transparent;
     outline: none;
     font-size: 15px;
     color: var(--ion-text-color);
+    height: 100%;
+    padding: 0; /* Input už nepotřebuje padding-right, křížek stojí vedle něj */
 
     &::placeholder {
       color: var(--ion-color-step-600);
     }
   }
 
-  .clear-icon {
-    position: absolute;
-    right: 12px;
-    font-size: 20px;
-    color: var(--ion-color-step-400);
+  .clear-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 4px 0 10px; /* Vytvoří bezpečný prostor pro kliknutí prstem */
     cursor: pointer;
-    transition: color 0.2s;
+    flex-shrink: 0; /* Křížek se nesmí smrštit */
+
+    .clear-icon {
+      margin: 0 !important; /* Vynulování okolních maržů */
+      font-size: 20px;
+      color: var(--ion-color-step-400);
+      transition: color 0.2s;
+      pointer-events: none; /* Kliknutí zachytává kontejner, ne samotná malá ikonka */
+    }
 
     &:active {
-      color: #ffc107;
+      .clear-icon {
+        color: #ffc107;
+      }
     }
   }
 }
 
 .filter-btn-new {
-  --color: #ffc107;
-  height: 54px;
-  width: 54px;
-  margin-left: 10px;
-  --padding-start: 0;
-  --padding-end: 0;
+  height: 48px;
+  width: 44px;
+  margin-left: 12px !important;
+  margin-right: -6px !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  background: transparent;
+  padding: 0 !important;
+  border: none;
+  flex-shrink: 0;
 
   ion-icon {
-    font-size: 35px;
-    padding-left: 18px;
+    color: #ffc107;
+    font-size: 34px; // Ideální velikost sliderů
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block;
+  }
+
+  &:active {
+    opacity: 0.7;
   }
 }
 
@@ -110,8 +146,8 @@ ion-header {
 }
 
 .header-content-main {
-  background: var(--ion-background-color);
-  padding: 15px 2px 5px 20px;
+  background: transparent !important;
+  padding: 15px 2px 5px 12px;
   width: 80%;
 
   h1 {
@@ -302,4 +338,53 @@ ion-toolbar {
   height: 36px;
   width: auto;
   max-width: 200px;
+}
+
+.active-filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 16px 12px 16px;
+  background: var(--ion-background-color);
+  width: 100%;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--ion-color-step-100, #f2f2f2);
+  color: var(--ion-text-color);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--ion-color-step-200, #e0e0e0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  animation: filterChipFadeIn 0.25s ease-out forwards;
+
+  span {
+    margin-right: 6px;
+  }
+
+  ion-icon {
+    font-size: 16px;
+    color: #ffc107;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+
+    &:active {
+      transform: scale(0.85);
+    }
+  }
+}
+
+@keyframes filterChipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

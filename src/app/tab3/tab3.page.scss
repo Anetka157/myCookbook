@@ -26,11 +26,9 @@ ion-content {
 .profile-header {
   background: var(--ion-background-color);
   margin-top: 0px !important;
-  // 1. STAV (ONLINE): Systémový výpočet z tab2, spodní padding upraven na 30px pro hezký odstup od podnadpisu
   padding: calc(env(safe-area-inset-top) + 30px) 20px 30px 20px;
   text-align: center;
 
-  // 2. STAV (OFFLINE): Přesně ta hodnota, která ti zachránila tab2!
   &.is-offline {
     margin-top: -20px !important;
   }
@@ -77,29 +75,69 @@ ion-content {
     font-weight: 700;
   }
 
-  ion-list {
-    background: transparent;
-    padding: 0;
+  .custom-settings-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
-  .settings-item {
-    --background: var(--card-background);
-    --color: var(--ion-text-color);
-    --border-radius: 16px;
-    margin-bottom: 12px;
-    --padding-start: 16px;
-    --inner-padding-end: 16px;
-    height: 65px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  // 🔥 PERFEKTNÍ ŠTÍHLÉ KARTÁČKY S SPRÁVNÝM ROZESTUPEM
+  .settings-card {
+    background: var(--card-background);
+    color: var(--ion-text-color);
+    border-radius: 16px;
 
-    ion-icon[slot="start"] {
+    // Zvětšený rozestup mezi kartičkami z původních 12px na 16px
+    margin-bottom: 16px;
+    padding: 0 16px;
+
+    // Krásně úzká výška zachována
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+    // Elegantní prostorový stín pro oba režimy
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25),
+    0 0 1px rgba(255, 255, 255, 0.08);
+    position: relative;
+
+    // První ikona v kartičce (vrácena původní hezká velikost)
+    > ion-icon:first-child {
       color: #ffc107;
       font-size: 22px;
+      margin-right: 16px;
     }
 
+    // Text vedle ikony
+    .card-label {
+      font-size: 1rem;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    // Přepínače na konci (vrácena 100% původní velikost bez zmenšování)
     ion-toggle {
       --handle-background-checked: #ffc107;
       --track-background-checked: rgba(255, 193, 7, 0.3);
+      margin: 0;
+      padding: 0;
+      transform: scale(1);
+    }
+
+    // Šipka na konci třetí kartičky (vrácena původní velikost)
+    .arrow-forward {
+      color: var(--ion-color-medium);
+      font-size: 18px;
+    }
+
+    // Efekt pro klikací kartičku Ochrana údajů
+    &.is-clickable {
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+
+      &:active {
+        background-color: rgba(var(--ion-color-primary-rgb), 0.08);
+      }
     }
   }
 }
@@ -116,7 +154,7 @@ ion-content {
   }
 }
 
-// JEDNOTNÁ KÁVOVÁ OFFLINE LIŠTA (PŘEVZATO Z TAB2/TAB1)
+// JEDNOTNÁ KÁVOVÁ OFFLINE LIŠTA
 .offline-toolbar {
   --background: #3c1d1a !important;
   background: #3c1d1a !important;

@@ -49,16 +49,4 @@ export class FilterComponent {
   dismiss() {
     this.modalCtrl.dismiss();
   }
-
-  resetFilters() {
-    this.type = '';
-    this.cuisine = '';
-    this.diet = '';
-
-    this.modalCtrl.dismiss({
-      type: '',
-      cuisine: '',
-      diet: ''
-    });
-  }
 }

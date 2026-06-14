@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/core/services/auth';
 import { firstValueFrom } from 'rxjs';
 import { Firestore, collection, query, where, getDocs, deleteDoc, doc } from '@angular/fire/firestore';
 
+import { Auth } from '@angular/fire/auth';
+
 import { addIcons } from 'ionicons';
 import {
   heart, heartOutline, timeOutline, statsChartOutline,
@@ -30,6 +32,7 @@ export class Tab1Page implements OnInit {
   private dataService = inject(DataService);
   private authService = inject(AuthService);
   private firestore = inject(Firestore);
+  private fbAuth = inject(Auth);
   private cd = inject(ChangeDetectorRef);
   private router = inject(Router);
 
@@ -134,7 +137,6 @@ export class Tab1Page implements OnInit {
     this.loadMeals(false);
   }
 
-  // 🔥 PŘIDÁNO: Nová čistá funkce pro tlačítko
   loadMoreRecipes() {
     if (this.isLoading || this.recipes.length >= this.totalRecipes) {
       return;
@@ -156,11 +158,110 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  loadUserData() {
-    this.authService.user$.subscribe(user => {
+  // Pomocná metodá pro správu zobrazení aktivních filtrů v UI
+  hasActiveFilters(): boolean {
+    if (!this.filters) return false;
+    return Object.keys(this.filters).some(
+      key => this.filters[key] !== null && this.filters[key] !== undefined && this.filters[key] !== '' && this.filters[key] !== false
+    );
+  }
+
+  getActiveFiltersKeys(): string[] {
+    if (!this.filters) return [];
+    return Object.keys(this.filters).filter(
+      key => this.filters[key] !== null && this.filters[key] !== undefined && this.filters[key] !== '' && this.filters[key] !== false
+    );
+  }
+
+  getFilterLabel(key: string): string {
+    const val = this.filters[key];
+    if (val === null || val === undefined || val === '') return '';
+
+    // Převod na řetězec a odstranění mezer pro jistotu
+    const stringVal = String(val).toLowerCase().trim();
+
+    // Slovníček pro překlad z API do češtiny (přidej si sem další, pokud máš ve filtru jiné)
+    const translations: { [key: string]: string } = {
+      // Typy jídel (mealType)
+      'breakfast': 'Snídaně',
+      'lunch': 'Oběd',
+      'dinner': 'Večeře',
+      'dessert': 'Dezert',
+
+      // Kuchyně (cuisine)
+      'italian': 'Italská',
+      'mexican': 'Mexická',
+      'chinese': 'Čínská',
+      'indian': 'Indická',
+      'french': 'Francouzská',
+      'czech': 'Česká',
+
+      // Dieta
+      'vegetarian': 'Vegetariánská',
+      'vegan': 'Veganská',
+      'gluten free': 'Bezlepková',
+
+      // Obtížnosti (difficulty)
+      'easy lvl': 'Snadná',
+      'medium lvl': 'Střední',
+      'hard lvl': 'Náročná'
+    };
+
+    if (translations[stringVal]) {
+      return translations[stringVal];
+    }
+
+    if (typeof val === 'boolean' && val === true) {
+      if (key === 'vegetarian') return 'Vegetariánské';
+      if (key === 'vegan') return 'Veganské';
+      if (key === 'glutenFree') return 'Bezlepkové';
+      return key;
+    }
+
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  }
+
+  removeFilter(key: string) {
+    if (!this.filters) return;
+
+    // Reset filtr podle typu hodnoty
+    if (typeof this.filters[key] === 'boolean') {
+      this.filters[key] = false;
+    } else {
+      this.filters[key] = '';
+    }
+
+    this.handleSearch();
+  }
+
+  async loadUserData() {
+    this.authService.user$.subscribe(async user => {
       if (user) {
-        const nameFromEmail = user.email?.split('.')[0] || 'Kuchaři';
-        this.displayName = user.displayName || nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        let currentName = user.displayName;
+
+        // Pokud jméno chybí, vynutíme reload přes nativní Firebase Auth
+        if (!currentName) {
+          try {
+            const rawUser = this.fbAuth.currentUser;
+            if (rawUser) {
+              await rawUser.reload(); // Stáhne čerstvá data ze serveru
+              currentName = rawUser.displayName; // Vezme čerstvé jméno
+            }
+          } catch (e) {
+            console.error('Nepodařilo se znovu načíst profil uživatele:', e);
+          }
+        }
+
+        // Pokud jméno mám, ukáže se, jinak bereme e-mail jako zálohu
+        if (currentName) {
+          this.displayName = currentName;
+        } else {
+          const nameFromEmail = user.email?.split('.')[0] || 'Kuchaři';
+          this.displayName = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        }
+
+        // Vynutíme překreslení stránky
+        this.cd.detectChanges();
       }
     });
   }

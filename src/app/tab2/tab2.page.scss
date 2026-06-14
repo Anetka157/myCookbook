@@ -12,7 +12,7 @@ ion-content {
 .header-content {
   background: var(--ion-background-color);
   margin-top: 0px !important;
-  padding: calc(env(safe-area-inset-top) + 30px) 20px 20px 20px;
+  padding: calc(env(safe-area-inset-top) + 30px) 16px 20px 16px;
 
   &.is-offline {
     margin-top: -20px !important;  }

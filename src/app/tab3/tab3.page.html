@@ -18,28 +18,31 @@
   <div class="settings-container">
     <h3 class="section-title">Nastavení aplikace</h3>
 
-    <ion-list lines="none">
-      <ion-item class="settings-item">
-        <ion-icon slot="start" name="notifications-outline"></ion-icon>
-        <ion-label>Upozornění</ion-label>
+    <div class="custom-settings-list">
+
+      <div class="settings-card">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="card-label">Upozornění</span>
         <ion-toggle
-          slot="end"
           [checked]="notificationsEnabled"
-          (ionChange) = "toggleNotifications($event)">
+          (ionChange)="toggleNotifications($event)">
         </ion-toggle>
-      </ion-item>
+      </div>
 
-      <ion-item class="settings-item">
-        <ion-icon slot="start" name="color-palette-outline"></ion-icon>
-        <ion-label>Tmavý režim</ion-label>
-        <ion-toggle slot="end" [checked]="isDarkMode" (ionChange)="toggleTheme($event)"></ion-toggle>
-      </ion-item>
+      <div class="settings-card">
+        <ion-icon name="color-palette-outline"></ion-icon>
+        <span class="card-label">Tmavý režim</span>
+        <ion-toggle [checked]="isDarkMode" (ionChange)="toggleTheme($event)"></ion-toggle>
+      </div>
 
-      <ion-item button (click)="showPrivacyPolicy()" class="settings-item">
-        <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
-        <ion-label>Ochrana údajů</ion-label>
-      </ion-item>
-    </ion-list>
+      <div class="settings-card is-clickable" (click)="showPrivacyPolicy()">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <span class="card-label">Ochrana údajů</span>
+        <!-- Tady přidáme tu malou šipku doprava, co tam byla nativně -->
+        <ion-icon name="chevron-forward-outline" class="arrow-forward"></ion-icon>
+      </div>
+
+    </div>
 
     <div class="logout-wrapper">
       <ion-button (click)="logout()" expand="block" fill="clear" class="logout-btn">

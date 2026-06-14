@@ -10,7 +10,8 @@ export class MealService {
   private http = inject(HttpClient);
 
   // OPRAVENO: Odstraněna nefunkční proxy. GitHub Gist Raw funguje přímo.
-  private apiUrl = 'https://gist.githubusercontent.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/41e078ace862db489fee34a5973d22c2ff3a44e8/recipes.json';
+  private apiUrl = 'https://gist.githubusercontent.com/Anetka157/dbef31727bef96b1317d1758037b9ccc/raw/c563ca1ebe7443bd3ecd12dbcd1aafb015faacdb/recipes.json';
+
   getMeals(offset: number = 0, filters: any = {}) {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(allData => {
